@@ -1,8 +1,8 @@
-# jsQR
+# TurboWarp-jsQR
 
 [日本語](README.ja.md)
 
-jsQR is a TurboWarp extension capability for reading QR code text from a shared
+TurboWarp-jsQR is a TurboWarp extension capability for reading QR code text from a shared
 camera frame source. It prefers `@kubohiroya/turbowarp-camera-source` instead of
 owning camera startup itself, so QR scanning can coexist with TMPose and can
 select a dedicated named camera such as a downward-facing `qr` camera.
