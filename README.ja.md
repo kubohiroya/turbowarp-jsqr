@@ -1,8 +1,8 @@
-# jsQR
+# TurboWarp-jsQR
 
 [English](README.md)
 
-jsQRは、共有カメラフレームからQRコード文字列を読み取るTurboWarp拡張capabilityです。カメラを自前で所有せず、`@kubohiroya/turbowarp-camera-source`を優先して使うことで、TMPoseなどのカメラ利用と共存し、`qr`のような名前付き下向きカメラを指定できます。
+TurboWarp-jsQRは、共有カメラフレームからQRコード文字列を読み取るTurboWarp拡張capabilityです。カメラを自前で所有せず、`@kubohiroya/turbowarp-camera-source`を優先して使うことで、TMPoseなどのカメラ利用と共存し、`qr`のような名前付き下向きカメラを指定できます。
 
 **[English guide](https://kubohiroya.github.io/turbowarp-jsqr/)** ·
 **[日本語ガイド](https://kubohiroya.github.io/turbowarp-jsqr/ja/)**
