@@ -12,6 +12,10 @@
       "blockType": "COMMAND",
       "arguments": [
         {
+          "id": "CAMERA_ID",
+          "type": "STRING"
+        },
+        {
           "id": "RUNTIME_VAR",
           "type": "STRING"
         }
@@ -21,6 +25,10 @@
       "opcode": "waitForQrTextSetRuntimeVarAndBroadcast",
       "blockType": "COMMAND",
       "arguments": [
+        {
+          "id": "CAMERA_ID",
+          "type": "STRING"
+        },
         {
           "id": "MESSAGE",
           "type": "STRING"

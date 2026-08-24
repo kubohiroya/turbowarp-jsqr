@@ -5,7 +5,7 @@ function scratch(runtime: Record<string, unknown> = {}) {
   return {
     vm: {runtime},
     extensions: {unsandboxed: true, register: vi.fn()},
-    BlockType: {REPORTER: 'reporter'},
+    BlockType: {COMMAND: 'command', REPORTER: 'reporter'},
     ArgumentType: {STRING: 'string'},
     translate: (message: string) => message
   };
@@ -32,5 +32,21 @@ describe('JsQrExtension', () => {
   it('requires the shared camera source for waits', async () => {
     const extension = new JsQrExtension();
     await expect(extension.waitForQrText()).rejects.toThrow(/camera-source/u);
+  });
+
+  it('passes the requested camera ID to Camera Source', async () => {
+    const release = vi.fn(async () => undefined);
+    const acquireCamera = vi.fn(async () => ({
+      getFrameSource: () => ({element: {}, width: 1, height: 1}),
+      release
+    }));
+    vi.stubGlobal('Scratch', scratch({ext_kubohiroyacamerasource: {acquireCamera}}));
+    const extension = new JsQrExtension();
+    vi.spyOn(extension, 'scanFrame').mockReturnValue('qr:downward');
+
+    await expect(extension.waitForQrText({cameraId: 'qr'})).resolves.toBe('qr:downward');
+
+    expect(acquireCamera).toHaveBeenCalledWith({owner: 'kubohiroyajsqr', cameraId: 'qr'});
+    expect(release).toHaveBeenCalledOnce();
   });
 });

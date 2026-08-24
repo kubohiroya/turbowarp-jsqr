@@ -4,18 +4,20 @@
     {
       "opcode": "waitForQrTextSetRuntimeVar",
       "blockType": "COMMAND",
-      "text": "wait for QR code set runtime var [RUNTIME_VAR] to text",
-      "description": "Waits until a QR code is detected and stores its text in a runtime variable.",
+      "text": "wait for QR code on camera [CAMERA_ID] set runtime var [RUNTIME_VAR] to text",
+      "description": "Waits until a QR code is detected on the named camera and stores its text in a runtime variable.",
       "arguments": {
+        "CAMERA_ID": {"type": "STRING", "defaultValue": "default"},
         "RUNTIME_VAR": {"type": "STRING", "defaultValue": "qrText"}
       }
     },
     {
       "opcode": "waitForQrTextSetRuntimeVarAndBroadcast",
       "blockType": "COMMAND",
-      "text": "wait for QR code set runtime var [RUNTIME_VAR] to text and broadcast [MESSAGE]",
-      "description": "Waits until a QR code is detected, stores its text, and broadcasts a message.",
+      "text": "wait for QR code on camera [CAMERA_ID] set runtime var [RUNTIME_VAR] to text and broadcast [MESSAGE]",
+      "description": "Waits until a QR code is detected on the named camera, stores its text, and broadcasts a message.",
       "arguments": {
+        "CAMERA_ID": {"type": "STRING", "defaultValue": "default"},
         "RUNTIME_VAR": {"type": "STRING", "defaultValue": "qrText"},
         "MESSAGE": {"type": "STRING", "defaultValue": "qrScanned"}
       }

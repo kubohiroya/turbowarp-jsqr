@@ -18,19 +18,19 @@
   </div></header>
   <main>
     <section class="hero">
-      <div><p class="eyebrow">TurboWarp QR input</p><h1>カメラを所有せずQRを読む。</h1>
-      <p class="lede">jsQRはCamera Sourceのフレームを利用してQRコード文字列を復号し、Temporary Variablesへ結果を書き込めます。</p></div>
-      <div class="panel"><span class="block">wait for QR code set runtime var qrText to text</span><span class="block">last QR text</span></div>
+      <div><p class="eyebrow">TurboWarp QR input</p><h1>名前付きカメラからQRを読む。</h1>
+      <p class="lede">jsQRはCamera Sourceのフレームを利用してQRコード文字列を復号します。TMPoseが別カメラを使っている間に、`qr`のような下向き専用カメラを指定できます。</p></div>
+      <div class="panel"><span class="block">wait for QR code on camera qr</span><span class="block">last QR text</span></div>
     </section>
     <section class="section" id="blocks"><h2>ブロック</h2><div class="grid">
-      <article class="card"><h3>wait for QR code set runtime var</h3><p>QRコードが見つかるまで待ち、復号した文字列を保存します。</p></article>
+      <article class="card"><h3>wait for QR code set runtime var</h3><p>指定カメラでQRコードが見つかるまで待ち、復号した文字列を保存します。</p></article>
       <article class="card"><h3>wait for QR code and broadcast</h3><p>文字列保存後にbroadcastを開始します。</p></article>
       <article class="card"><h3>last QR text</h3><p>最後に読み取ったQR文字列を返します。</p></article>
     </div></section>
     <section class="section" id="api"><h2>API capability</h2><p>unsandboxed拡張は`Scratch.vm.runtime.ext_kubohiroyajsqr`を参照できます。</p>
-<pre><code>const text = await jsqr.waitForQrText({signal});
+<pre><code>const text = await jsqr.waitForQrText({cameraId: 'qr', signal});
 const textOrNull = jsqr.scanFrame(frameSource);</code></pre>
-    <p>`waitForQrText()`はCamera Sourceのleaseを取得し、フレームをポーリングして最初の復号文字列を返します。</p></section>
+    <p>`waitForQrText()`はCamera Sourceの名前付きleaseを取得し、フレームをポーリングして最初の復号文字列を返します。</p></section>
     <section class="section" id="setup"><h2>準備</h2><p class="note">Camera SourceをjsQRより先に読み込んでください。runtime variableブロックにはTemporary Variables (`lmsTempVars2`) が必要です。カメラフレームはアップロードされません。</p></section>
   </main>
   <footer>Source: <a href="https://github.com/kubohiroya/turbowarp-jsqr">GitHub</a></footer>

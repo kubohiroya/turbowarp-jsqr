@@ -34,6 +34,7 @@ interface CameraSourceCapability {
 }
 
 export interface WaitForQrTextOptions {
+  cameraId?: string;
   signal?: AbortSignal;
   intervalMilliseconds?: number;
 }
@@ -48,6 +49,11 @@ function abortError(): Error {
   const error = new Error('QR scanning was aborted.');
   error.name = 'AbortError';
   return error;
+}
+
+function normalizeCameraId(value: unknown): string {
+  const text = String(value ?? '').trim();
+  return text || 'default';
 }
 
 export class JsQrExtension implements TurboWarpExtension {
@@ -69,15 +75,17 @@ export class JsQrExtension implements TurboWarpExtension {
     return this.lastQrText;
   }
 
-  public async waitForQrTextSetRuntimeVar(args: {RUNTIME_VAR: unknown}): Promise<void> {
-    const text = await this.waitForQrText();
+  public async waitForQrTextSetRuntimeVar(
+    args: {CAMERA_ID?: unknown; RUNTIME_VAR: unknown}
+  ): Promise<void> {
+    const text = await this.waitForQrText({cameraId: normalizeCameraId(args.CAMERA_ID)});
     this.writeRuntimeVariable(args.RUNTIME_VAR, text);
   }
 
   public async waitForQrTextSetRuntimeVarAndBroadcast(
-    args: {RUNTIME_VAR: unknown; MESSAGE: unknown}
+    args: {CAMERA_ID?: unknown; RUNTIME_VAR: unknown; MESSAGE: unknown}
   ): Promise<void> {
-    const text = await this.waitForQrText();
+    const text = await this.waitForQrText({cameraId: normalizeCameraId(args.CAMERA_ID)});
     this.writeRuntimeVariable(args.RUNTIME_VAR, text);
     const message = String(args.MESSAGE ?? '').trim();
     if (!message) throw new Error('MESSAGE must be specified.');
@@ -88,7 +96,10 @@ export class JsQrExtension implements TurboWarpExtension {
     const signal = options.signal;
     if (signal?.aborted) throw abortError();
     const cameraSource = this.cameraSource();
-    const lease = await cameraSource.acquireCamera({owner: extensionConfig.id});
+    const lease = await cameraSource.acquireCamera({
+      owner: extensionConfig.id,
+      cameraId: normalizeCameraId(options.cameraId)
+    });
     const intervalMilliseconds = Math.max(50, options.intervalMilliseconds ?? 150);
     try {
       return await new Promise<string>((resolve, reject) => {

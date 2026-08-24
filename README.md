@@ -4,8 +4,8 @@
 
 jsQR is a TurboWarp extension capability for reading QR code text from a shared
 camera frame source. It prefers `@kubohiroya/turbowarp-camera-source` instead of
-owning camera startup itself, so QR scanning can coexist with TMPose and other
-camera consumers.
+owning camera startup itself, so QR scanning can coexist with TMPose and can
+select a dedicated named camera such as a downward-facing `qr` camera.
 
 **[Open the user guide](https://kubohiroya.github.io/turbowarp-jsqr/)** ·
 **[日本語ガイド](https://kubohiroya.github.io/turbowarp-jsqr/ja/)**
@@ -29,24 +29,26 @@ The generated JavaScript is a single, non-minified TurboWarp extension file with
 
 <!-- BEGIN GENERATED BLOCKS -->
 
-### `wait for QR code set runtime var [RUNTIME_VAR] to text`
+### `wait for QR code on camera [CAMERA_ID] set runtime var [RUNTIME_VAR] to text`
 
-Waits until a QR code is detected and stores its text in a runtime variable.
+Waits until a QR code is detected on the named camera and stores its text in a runtime variable.
 
 | Property | Value |
 |---|---|
 | Type | Command |
 | Opcode | `waitForQrTextSetRuntimeVar` |
+| `CAMERA_ID` | String, default: `default` |
 | `RUNTIME_VAR` | String, default: `qrText` |
 
-### `wait for QR code set runtime var [RUNTIME_VAR] to text and broadcast [MESSAGE]`
+### `wait for QR code on camera [CAMERA_ID] set runtime var [RUNTIME_VAR] to text and broadcast [MESSAGE]`
 
-Waits until a QR code is detected, stores its text, and broadcasts a message.
+Waits until a QR code is detected on the named camera, stores its text, and broadcasts a message.
 
 | Property | Value |
 |---|---|
 | Type | Command |
 | Opcode | `waitForQrTextSetRuntimeVarAndBroadcast` |
+| `CAMERA_ID` | String, default: `default` |
 | `RUNTIME_VAR` | String, default: `qrText` |
 | `MESSAGE` | String, default: `qrScanned` |
 
@@ -71,8 +73,12 @@ npm run check
 ## Runtime API
 
 Other unsandboxed extensions can access `Scratch.vm.runtime.ext_kubohiroyajsqr`.
-Use `waitForQrText({signal})` to wait for the next decoded QR value, or
+Use `waitForQrText({cameraId, signal})` to wait for the next decoded QR value, or
 `scanFrame(frameSource)` to decode one camera frame.
+
+```js
+const text = await jsqr.waitForQrText({cameraId: 'qr', signal});
+```
 
 For continuous rebuilding during development:
 

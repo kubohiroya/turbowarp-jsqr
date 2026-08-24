@@ -10020,7 +10020,7 @@
   var jsQRExports = requireJsQR();
   const jsQR = /* @__PURE__ */ getDefaultExportFromCjs(jsQRExports);
   const extensionName = "jsQR";
-  const blocks = [{ "opcode": "waitForQrTextSetRuntimeVar", "blockType": "COMMAND", "text": "wait for QR code set runtime var [RUNTIME_VAR] to text", "description": "Waits until a QR code is detected and stores its text in a runtime variable.", "arguments": { "RUNTIME_VAR": { "type": "STRING", "defaultValue": "qrText" } } }, { "opcode": "waitForQrTextSetRuntimeVarAndBroadcast", "blockType": "COMMAND", "text": "wait for QR code set runtime var [RUNTIME_VAR] to text and broadcast [MESSAGE]", "description": "Waits until a QR code is detected, stores its text, and broadcasts a message.", "arguments": { "RUNTIME_VAR": { "type": "STRING", "defaultValue": "qrText" }, "MESSAGE": { "type": "STRING", "defaultValue": "qrScanned" } } }, { "opcode": "lastQrTextReporter", "blockType": "REPORTER", "text": "last QR text", "description": "Returns the most recent QR text detected by this extension.", "arguments": {} }];
+  const blocks = [{ "opcode": "waitForQrTextSetRuntimeVar", "blockType": "COMMAND", "text": "wait for QR code on camera [CAMERA_ID] set runtime var [RUNTIME_VAR] to text", "description": "Waits until a QR code is detected on the named camera and stores its text in a runtime variable.", "arguments": { "CAMERA_ID": { "type": "STRING", "defaultValue": "default" }, "RUNTIME_VAR": { "type": "STRING", "defaultValue": "qrText" } } }, { "opcode": "waitForQrTextSetRuntimeVarAndBroadcast", "blockType": "COMMAND", "text": "wait for QR code on camera [CAMERA_ID] set runtime var [RUNTIME_VAR] to text and broadcast [MESSAGE]", "description": "Waits until a QR code is detected on the named camera, stores its text, and broadcasts a message.", "arguments": { "CAMERA_ID": { "type": "STRING", "defaultValue": "default" }, "RUNTIME_VAR": { "type": "STRING", "defaultValue": "qrText" }, "MESSAGE": { "type": "STRING", "defaultValue": "qrScanned" } } }, { "opcode": "lastQrTextReporter", "blockType": "REPORTER", "text": "last QR text", "description": "Returns the most recent QR text detected by this extension.", "arguments": {} }];
   const definitions = {
     extensionName,
     blocks
@@ -10033,6 +10033,10 @@
     const error = new Error("QR scanning was aborted.");
     error.name = "AbortError";
     return error;
+  }
+  function normalizeCameraId(value) {
+    const text = String(value ?? "").trim();
+    return text || "default";
   }
   class JsQrExtension {
     constructor() {
@@ -10050,11 +10054,11 @@
       return this.lastQrText;
     }
     async waitForQrTextSetRuntimeVar(args) {
-      const text = await this.waitForQrText();
+      const text = await this.waitForQrText({ cameraId: normalizeCameraId(args.CAMERA_ID) });
       this.writeRuntimeVariable(args.RUNTIME_VAR, text);
     }
     async waitForQrTextSetRuntimeVarAndBroadcast(args) {
-      const text = await this.waitForQrText();
+      const text = await this.waitForQrText({ cameraId: normalizeCameraId(args.CAMERA_ID) });
       this.writeRuntimeVariable(args.RUNTIME_VAR, text);
       const message = String(args.MESSAGE ?? "").trim();
       if (!message) throw new Error("MESSAGE must be specified.");
@@ -10064,7 +10068,10 @@
       const signal = options.signal;
       if (signal?.aborted) throw abortError();
       const cameraSource = this.cameraSource();
-      const lease = await cameraSource.acquireCamera({ owner: extensionConfig.id });
+      const lease = await cameraSource.acquireCamera({
+        owner: extensionConfig.id,
+        cameraId: normalizeCameraId(options.cameraId)
+      });
       const intervalMilliseconds = Math.max(50, options.intervalMilliseconds ?? 150);
       try {
         return await new Promise((resolve, reject) => {
