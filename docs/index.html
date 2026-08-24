@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="jsQR TurboWarp extension guide for reading QR code text from a shared camera source.">
+  <title>jsQR user guide</title>
+  <link rel="canonical" href="https://kubohiroya.github.io/turbowarp-jsqr/">
+  <link rel="alternate" hreflang="en" href="https://kubohiroya.github.io/turbowarp-jsqr/">
+  <link rel="alternate" hreflang="ja" href="https://kubohiroya.github.io/turbowarp-jsqr/ja/">
+  <link rel="stylesheet" href="./assets/site.css">
+</head>
+<body>
+  <header class="topbar"><div class="topbar-inner">
+    <a class="brand" href="./">jsQR</a>
+    <nav class="nav" aria-label="Sections"><a href="#blocks">Blocks</a><a href="#api">API</a><a href="#setup">Setup</a></nav>
+    <nav class="lang" aria-label="Language"><a href="./" aria-current="page">English</a><a href="./ja/">日本語</a></nav>
+  </div></header>
+  <main>
+    <section class="hero">
+      <div><p class="eyebrow">TurboWarp QR input</p><h1>Read QR text without owning the camera.</h1>
+      <p class="lede">jsQR consumes frames from Camera Source, decodes QR code text, and can write the result into Temporary Variables for Scratch-style scripts.</p></div>
+      <div class="panel"><span class="block">wait for QR code set runtime var qrText to text</span><span class="block">last QR text</span></div>
+    </section>
+    <section class="section" id="blocks"><h2>Blocks</h2><div class="grid">
+      <article class="card"><h3>wait for QR code set runtime var</h3><p>Waits until a QR code is visible and stores the decoded text.</p></article>
+      <article class="card"><h3>wait for QR code and broadcast</h3><p>Stores the decoded text and starts a broadcast hat after the write.</p></article>
+      <article class="card"><h3>last QR text</h3><p>Reports the most recent decoded QR text.</p></article>
+    </div></section>
+    <section class="section" id="api"><h2>API capability</h2><p>Unsandboxed extensions can read `Scratch.vm.runtime.ext_kubohiroyajsqr`.</p>
+<pre><code>const text = await jsqr.waitForQrText({signal});
+const textOrNull = jsqr.scanFrame(frameSource);</code></pre>
+    <p>`waitForQrText()` acquires Camera Source, polls frames, releases its lease, and returns the first decoded text.</p></section>
+    <section class="section" id="setup"><h2>Setup</h2><p class="note">Load Camera Source before jsQR. Runtime-variable blocks require the Temporary Variables extension (`lmsTempVars2`). The extension does not upload camera frames.</p></section>
+  </main>
+  <footer>Source: <a href="https://github.com/kubohiroya/turbowarp-jsqr">GitHub</a></footer>
+</body>
+</html>

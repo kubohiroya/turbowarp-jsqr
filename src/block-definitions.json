@@ -1,0 +1,31 @@
+{
+  "extensionName": "jsQR",
+  "blocks": [
+    {
+      "opcode": "waitForQrTextSetRuntimeVar",
+      "blockType": "COMMAND",
+      "text": "wait for QR code set runtime var [RUNTIME_VAR] to text",
+      "description": "Waits until a QR code is detected and stores its text in a runtime variable.",
+      "arguments": {
+        "RUNTIME_VAR": {"type": "STRING", "defaultValue": "qrText"}
+      }
+    },
+    {
+      "opcode": "waitForQrTextSetRuntimeVarAndBroadcast",
+      "blockType": "COMMAND",
+      "text": "wait for QR code set runtime var [RUNTIME_VAR] to text and broadcast [MESSAGE]",
+      "description": "Waits until a QR code is detected, stores its text, and broadcasts a message.",
+      "arguments": {
+        "RUNTIME_VAR": {"type": "STRING", "defaultValue": "qrText"},
+        "MESSAGE": {"type": "STRING", "defaultValue": "qrScanned"}
+      }
+    },
+    {
+      "opcode": "lastQrTextReporter",
+      "blockType": "REPORTER",
+      "text": "last QR text",
+      "description": "Returns the most recent QR text detected by this extension.",
+      "arguments": {}
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "name": "@kubohiroya/turbowarp-jsqr",
+  "version": "0.1.0",
+  "author": "Hiroya Kubo <hiroya@cuc.ac.jp>",
+  "description": "A TurboWarp capability extension for reading QR code text from a shared camera source.",
+  "type": "module",
+  "homepage": "https://kubohiroya.github.io/turbowarp-jsqr/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kubohiroya/turbowarp-jsqr.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kubohiroya/turbowarp-jsqr/issues"
+  },
+  "exports": {
+    "./jsqr.js": "./dist/jsqr.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "README.ja.md",
+    "LICENSE"
+  ],
+  "unpkg": "./dist/jsqr.js",
+  "jsdelivr": "./dist/jsqr.js",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit",
+    "build": "vite build",
+    "lint": "eslint src tests vite.config.ts",
+    "test": "vitest run",
+    "docs": "node scripts/generate-readme.mjs",
+    "docs:check": "npm run docs && git diff --exit-code -- README.md",
+    "docs:pages:check": "node scripts/check-pages.mjs",
+    "check": "npm run typecheck && npm run lint && npm run test && npm run docs:check && npm run docs:pages:check && npm run check:dist",
+    "check:dist": "npm run build && node scripts/check-dist.mjs"
+  },
+  "dependencies": {
+    "jsqr": "^1.4.0"
+  },
+  "peerDependencies": {
+    "@kubohiroya/turbowarp-camera-source": ">=0.1.0 <1"
+  },
+  "peerDependenciesMeta": {
+    "@kubohiroya/turbowarp-camera-source": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@kubohiroya/turbowarp-camera-source": "link:../turbowarp-camera-source",
+    "@kubohiroya/vite-plugin-turbowarp-extension": "0.1.1",
+    "@types/node": "^24.13.3",
+    "eslint": "^9.39.5",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.66.0",
+    "vite": "^7.3.6",
+    "vitest": "^4.1.10"
+  },
+  "keywords": [
+    "turbowarp",
+    "scratch",
+    "extension",
+    "qr",
+    "qrcode",
+    "camera"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "formatVersion": 1,
+  "id": "kubohiroyajsqr",
+  "blocks": [
+    {
+      "opcode": "lastQrTextReporter",
+      "blockType": "REPORTER",
+      "arguments": []
+    },
+    {
+      "opcode": "waitForQrTextSetRuntimeVar",
+      "blockType": "COMMAND",
+      "arguments": [
+        {
+          "id": "RUNTIME_VAR",
+          "type": "STRING"
+        }
+      ]
+    },
+    {
+      "opcode": "waitForQrTextSetRuntimeVarAndBroadcast",
+      "blockType": "COMMAND",
+      "arguments": [
+        {
+          "id": "MESSAGE",
+          "type": "STRING"
+        },
+        {
+          "id": "RUNTIME_VAR",
+          "type": "STRING"
+        }
+      ]
+    }
+  ],
+  "menus": []
+}
