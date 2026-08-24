@@ -35,10 +35,10 @@
     "lint": "eslint src tests vite.config.ts",
     "test": "vitest run",
     "docs": "node scripts/generate-readme.mjs",
-    "docs:check": "npm run docs && git diff --exit-code -- README.md",
+    "docs:check": "pnpm run docs && git diff --exit-code -- README.md",
     "docs:pages:check": "node scripts/check-pages.mjs",
-    "check": "npm run typecheck && npm run lint && npm run test && npm run docs:check && npm run docs:pages:check && npm run check:dist",
-    "check:dist": "npm run build && node scripts/check-dist.mjs"
+    "check": "pnpm run typecheck && pnpm run lint && pnpm run test && pnpm run docs:check && pnpm run docs:pages:check && pnpm run check:dist",
+    "check:dist": "pnpm run build && node scripts/check-dist.mjs"
   },
   "dependencies": {
     "jsqr": "^1.4.0"
@@ -53,7 +53,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
-    "@kubohiroya/turbowarp-camera-source": "link:../turbowarp-camera-source",
     "@kubohiroya/vite-plugin-turbowarp-extension": "0.1.1",
     "@types/node": "^24.13.3",
     "eslint": "^9.39.5",
