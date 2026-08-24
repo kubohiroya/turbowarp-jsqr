@@ -1,13 +1,16 @@
 lockfileVersion: '9.0'
 
 settings:
-  autoInstallPeers: false
+  autoInstallPeers: true
   excludeLinksFromLockfile: false
 
 importers:
 
   .:
     dependencies:
+      '@kubohiroya/turbowarp-camera-source':
+        specifier: '>=0.1.0 <1'
+        version: 0.1.0
       jsqr:
         specifier: ^1.4.0
         version: 1.4.0
@@ -255,6 +258,9 @@ packages:
 
   '@jridgewell/sourcemap-codec@1.5.5':
     resolution: {integrity: sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==}
+
+  '@kubohiroya/turbowarp-camera-source@0.1.0':
+    resolution: {integrity: sha512-sQYwihv8u+qQaXFenDmQmoxrnQt3VnnWkcnuWWmEchZITsbDADceHIxxLozp/LCpVbMA97XTpYkKP6fpBRPU8A==}
 
   '@kubohiroya/vite-plugin-turbowarp-extension@0.1.1':
     resolution: {integrity: sha512-6lOlSnfOcKeGwI8SpWQMC6Vz153WIit+1fVxhowy2YdgqC5tP96Zmzkn+Q+4JlJVRsFo89jrp7ifqJcWL56svg==}
@@ -1164,6 +1170,8 @@ snapshots:
   '@humanwhocodes/retry@0.4.3': {}
 
   '@jridgewell/sourcemap-codec@1.5.5': {}
+
+  '@kubohiroya/turbowarp-camera-source@0.1.0': {}
 
   '@kubohiroya/vite-plugin-turbowarp-extension@0.1.1(vite@7.3.6(@types/node@24.13.3))':
     dependencies:
