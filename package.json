@@ -1,9 +1,10 @@
 {
   "name": "@kubohiroya/turbowarp-jsqr",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Hiroya Kubo <hiroya@cuc.ac.jp>",
   "description": "A TurboWarp capability extension for reading QR code text from a shared camera source.",
   "type": "module",
+  "license": "MPL-2.0",
   "homepage": "https://kubohiroya.github.io/turbowarp-jsqr/",
   "repository": {
     "type": "git",
@@ -28,6 +29,10 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
+  "packageManager": "pnpm@11.18.0",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "vite build --watch",
     "typecheck": "tsc --noEmit",
@@ -37,8 +42,12 @@
     "docs": "node scripts/generate-readme.mjs",
     "docs:check": "pnpm run docs && git diff --exit-code -- README.md",
     "docs:pages:check": "node scripts/check-pages.mjs",
-    "check": "pnpm run typecheck && pnpm run lint && pnpm run test && pnpm run docs:check && pnpm run docs:pages:check && pnpm run check:dist",
-    "check:dist": "pnpm run build && node scripts/check-dist.mjs"
+    "repo:check": "node scripts/check-repo.mjs",
+    "pack:check": "npm pack --dry-run --ignore-scripts",
+    "release:check": "pnpm publish --dry-run --access public --no-git-checks",
+    "check": "pnpm run typecheck && pnpm run lint && pnpm run test && pnpm run docs:check && pnpm run docs:pages:check && pnpm run check:dist && pnpm run repo:check && pnpm run pack:check",
+    "check:dist": "pnpm run build && node scripts/check-dist.mjs",
+    "prepack": "pnpm run check"
   },
   "dependencies": {
     "jsqr": "^1.4.0"

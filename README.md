@@ -1,31 +1,54 @@
-# TurboWarp-jsQR
+# TurboWarp jsQR
 
-[日本語](README.ja.md)
+**English** | [日本語](README.ja.md)
 
-TurboWarp-jsQR is a TurboWarp extension capability for reading QR code text from a shared
+TurboWarp jsQR is a TurboWarp extension capability for reading QR code text from a shared
 camera frame source. It prefers `@kubohiroya/turbowarp-camera-source` instead of
-owning camera startup itself, so QR scanning can coexist with TMPose and can
+owning camera startup itself, so QR scanning can coexist with TurboWarp TM and can
 select a dedicated named camera such as a downward-facing `qr` camera.
 
 **[Open the user guide](https://kubohiroya.github.io/turbowarp-jsqr/)** ·
 **[日本語ガイド](https://kubohiroya.github.io/turbowarp-jsqr/ja/)**
 
-## Build workflow
+## What it does
+
+- Waits for a QR code on a named Camera Source stream.
+- Stores decoded QR text in a runtime variable for TurboWarp projects.
+- Optionally broadcasts a message after a successful scan.
+- Exposes `waitForQrText()` and `scanFrame()` for other unsandboxed extensions.
+
+## Requirements and Safety
+
+- TurboWarp custom extensions loaded with **Run extension without sandbox**.
+- `@kubohiroya/turbowarp-camera-source` loaded before jsQR.
+- Browser camera permission through Camera Source.
+- Temporary Variables (`lmsTempVars2`) when using runtime-variable blocks.
+- Camera frames stay in the browser. jsQR does not upload frames.
+
+## Installation
+
+Load Camera Source first, then load jsQR:
 
 ```text
-TypeScript source
-  -> Vite
-  -> vite-plugin-turbowarp-extension
-  -> dist/<extension-name>.js
-
-Extension config + block definitions
-  -> extension manifest plugin
-  -> dist/extension-manifest.json
+https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-jsqr@0.2.0/dist/jsqr.js
 ```
 
-The generated JavaScript is a single, non-minified TurboWarp extension file with Extension Gallery metadata and the standard `(function (Scratch) { ... })(Scratch);` wrapper.
+For npm hosts:
 
-## Blocks
+```bash
+pnpm add @kubohiroya/turbowarp-jsqr@0.2.0
+```
+
+## Quick Start
+
+Use a named camera such as `qr` when the project also uses another camera feature.
+
+```text
+wait for QR code on camera [qr] set runtime var [qrText] to text
+last QR text
+```
+
+## Block Reference
 
 <!-- BEGIN GENERATED BLOCKS -->
 
@@ -63,13 +86,6 @@ Returns the most recent QR text detected by this extension.
 
 <!-- END GENERATED BLOCKS -->
 
-## Development
-
-```bash
-npm install
-npm run check
-```
-
 ## Runtime API
 
 Other unsandboxed extensions can access `Scratch.vm.runtime.ext_kubohiroyajsqr`.
@@ -77,14 +93,41 @@ Use `waitForQrText({cameraId, signal})` to wait for the next decoded QR value, o
 `scanFrame(frameSource)` to decode one camera frame.
 
 ```js
-const text = await jsqr.waitForQrText({cameraId: 'qr', signal});
+const text = await jsqr.waitForQrText({ cameraId: "qr", signal });
+```
+
+## Compatibility
+
+The extension ID remains `kubohiroyajsqr`, and the block opcodes are unchanged. QR decode results, wait semantics, and the Camera Source peer range are unchanged in 0.2.0.
+
+## Development
+
+```bash
+corepack enable
+pnpm install --frozen-lockfile
+pnpm run check
 ```
 
 For continuous rebuilding during development:
 
 ```bash
-npm run dev
+pnpm run dev
 ```
+
+## Build Workflow
+
+```text
+TypeScript source
+  -> Vite
+  -> vite-plugin-turbowarp-extension
+  -> dist/jsqr.js
+
+Extension config + block definitions
+  -> extension manifest plugin
+  -> dist/extension-manifest.json
+```
+
+The generated JavaScript is a single, non-minified TurboWarp extension file with Extension Gallery metadata and the standard `(function (Scratch) { ... })(Scratch);` wrapper.
 
 ## Project structure
 
@@ -111,7 +154,7 @@ its ID. See [the architecture document](docs/architecture.md) and the
 After changing runtime or block metadata, regenerate and verify the tracked release artifacts:
 
 ```bash
-npm run check:dist
+pnpm run check:dist
 ```
 
 ## Generated documentation
@@ -119,11 +162,11 @@ npm run check:dist
 Regenerate block documentation with:
 
 ```bash
-npm run docs
+pnpm run docs
 ```
 
-`npm run check` also runs `docs:check`, which fails if `README.md` is out of date with `src/block-definitions.json`.
+`pnpm run check` also runs `docs:check`, which fails if `README.md` is out of date with `src/block-definitions.json`.
 
 ## License
 
-MPL-2.0
+SPDX-License-Identifier: MPL-2.0

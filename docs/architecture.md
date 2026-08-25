@@ -39,6 +39,6 @@ changes from documentation or localization changes.
 
 ## Drift detection
 
-`dist/` is committed as a release artifact. `npm run check:dist` rebuilds both files and fails when
+`dist/` is committed as a release artifact. `pnpm run check:dist` rebuilds both files and fails when
 Git reports any modified, deleted, or untracked file below `dist/`. This catches manifest and bundle
 drift in local checks and CI.
