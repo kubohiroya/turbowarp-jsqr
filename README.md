@@ -30,13 +30,13 @@ select a dedicated named camera such as a downward-facing `qr` camera.
 Load Camera Source first, then load jsQR:
 
 ```text
-https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-jsqr@0.2.0/dist/jsqr.js
+https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-jsqr@0.3.0/dist/jsqr.js
 ```
 
 For npm hosts:
 
 ```bash
-pnpm add @kubohiroya/turbowarp-jsqr@0.2.0
+pnpm add @kubohiroya/turbowarp-jsqr@0.3.0
 ```
 
 ## Quick Start
