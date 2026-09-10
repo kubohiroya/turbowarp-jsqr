@@ -3,29 +3,74 @@ import { dirname, join, relative, resolve } from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 
+interface RepoPolicy {
+  profile: string;
+  packageName: string;
+  extensionId: string;
+  standaloneBundle: string;
+  manifest: string;
+  readmes: {
+    english: string;
+    japanese: string;
+  };
+  license: string;
+  node: string;
+  packageManager: string;
+}
+
+interface PackageMetadata {
+  name: string;
+  version: string;
+  description?: string;
+  author?: string;
+  license?: string;
+  homepage?: string;
+  packageManager?: string;
+  engines?: {node?: string};
+  repository?: {url?: string};
+  bugs?: {url?: string};
+  files?: string[];
+  scripts?: Record<string, string>;
+  peerDependencies?: Record<string, string>;
+}
+
+interface ExtensionManifest {
+  formatVersion: number;
+  id: string;
+  blocks: ({
+    opcode: string;
+    blockType: string;
+    arguments: ({
+      id: string;
+      type: string;
+    })[];
+  })[];
+  menus: unknown[][];
+}
+
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
-async function readText(path) {
+async function readText(path: string): Promise<string> {
   return readFile(resolve(projectRoot, path), "utf8");
 }
 
-async function readJson(path) {
-  return JSON.parse(await readText(path));
+async function readJson<T = unknown>(path: string): Promise<T> {
+  return JSON.parse(await readText(path)) as T;
 }
 
-function requireText(source, expected, label) {
+function requireText(source: string, expected: string, label: string) {
   if (!source.includes(expected)) {
     throw new Error(`${label} does not contain ${expected}.`);
   }
 }
 
-function forbidText(source, forbidden, label) {
+function forbidText(source: string, forbidden: string, label: string) {
   if (source.includes(forbidden)) {
     throw new Error(`${label} must not contain ${forbidden}.`);
   }
 }
 
-async function collectTextFiles(directory, files = []) {
+async function collectTextFiles(directory: string, files: string[] = []): Promise<string[]> {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     if (entry.name === "node_modules" || entry.name === ".git") continue;
     const path = join(directory, entry.name);
@@ -54,9 +99,9 @@ const [
   japanesePage,
   license,
 ] = await Promise.all([
-  readJson("package.json"),
-  readJson("repo-policy.json"),
-  readJson("dist/extension-manifest.json"),
+  readJson<PackageMetadata>("package.json"),
+  readJson<RepoPolicy>("repo-policy.json"),
+  readJson<ExtensionManifest>("dist/extension-manifest.json"),
   readText("README.md"),
   readText("README.ja.md"),
   readText("docs/index.html"),
@@ -137,7 +182,7 @@ for (const expected of [
 
 for (const file of await collectTextFiles(projectRoot)) {
   const relativePath = relative(projectRoot, file);
-  if (relativePath === "scripts/check-repo.mjs") continue;
+  if (relativePath === "scripts/check-repo.ts") continue;
   const source = await readFile(file, "utf8");
   forbidText(source, ["tm", "pose"].join(""), relativePath);
   forbidText(source, ["TM", "Pose"].join(""), relativePath);
