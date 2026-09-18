@@ -2,7 +2,7 @@
 
 [English](README.md) | **日本語**
 
-TurboWarp jsQRは、共有カメラフレームからQRコード文字列を読み取るTurboWarp拡張capabilityです。カメラを自前で所有せず、`@kubohiroya/turbowarp-camera-source`を優先して使うことで、TurboWarp TMなどのカメラ利用と共存し、`qr`のような名前付き下向きカメラを指定できます。
+TurboWarp jsQRは、共有カメラフレームからQRコードを読み取るTurboWarp拡張capabilityです。0.4.0からは、jsQRではなくzxing-cpp（`zxing-wasm`）で復号し、連結QR（Structured Append）の中での位置も返します。カメラを自前で所有せず、`@kubohiroya/turbowarp-camera-source`を優先して使うことで、TurboWarp TMなどのカメラ利用と共存し、`qr`のような名前付き下向きカメラを指定できます。
 
 **[English guide](https://kubohiroya.github.io/turbowarp-jsqr/)** ·
 **[日本語ガイド](https://kubohiroya.github.io/turbowarp-jsqr/ja/)**
@@ -27,13 +27,13 @@ TurboWarp jsQRは、共有カメラフレームからQRコード文字列を読�
 Camera Sourceを先に読み込み、その後にjsQRを読み込みます。
 
 ```text
-https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-jsqr@0.3.0/dist/jsqr.js
+https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-jsqr@0.4.0/dist/jsqr.js
 ```
 
 npm hostでは次を使います。
 
 ```bash
-pnpm add @kubohiroya/turbowarp-jsqr@0.3.0
+pnpm add @kubohiroya/turbowarp-jsqr@0.4.0
 ```
 
 ## Quick start
@@ -55,16 +55,25 @@ last QR text
 
 他のunsandboxed拡張は`Scratch.vm.runtime.ext_kubohiroyajsqr`を参照できます。
 
+`capabilityVersion`は0.4.0から`2`です。
+
 ```js
 const text = await jsqr.waitForQrText({ cameraId: "qr", signal });
-const textOrNull = jsqr.scanFrame(frameSource);
+const read = await jsqr.readFrame(frameSource);
+// read: { text, bytes, structuredAppend: { index, count, parity } | null } または null
+const textOrNull = await jsqr.scanFrame(frameSource);
 ```
+
+- `readFrame(frameSource)`は1フレームを復号します。連結QRのシンボルなら、`text`と`bytes`はそのシンボルの分だけです。全シンボルの`bytes`を`index`の順に結合し、`count`と`parity`が揃っていることを確かめてください。`@kubohiroya/qrcode-structured-append`がその両方を行います。
+- `scanFrame(frameSource)`は、文字列（または`null`）のPromiseを返します。
 
 `waitForQrText()`はCamera Sourceのleaseを取得し、最初に復号できたQR文字列を返したあとleaseを解放します。`cameraId`を指定すると、Camera Source側で割り当てた下向きカメラなどを選べます。
 
 ## 互換性
 
-Extension IDは`kubohiroyajsqr`のままです。ブロックopcode、QR decode結果、wait semantics、Camera Source peer rangeは0.2.0でも変更しません。
+Extension IDは`kubohiroyajsqr`のままで、ブロックopcodeも変わりません。
+
+0.4.0で変わるのはブロックではなくruntime capabilityです。復号がzxing-cppになり非同期になったため、`scanFrame()`はPromiseを返すようになり、`readFrame()`を追加しました。0.3.0向けに`scanFrame()`の戻り値をそのまま使っていた呼び出し側は`await`が必要です。両者は`capabilityVersion`で見分けられます。zxing-cppは、jsQRでは読めなかったコード（画面の中で小さい、ぼけている、斜めから見ている、センサーの雑音が多い）も読め、1フレームを数十ミリ秒ではなく数ミリ秒で読みます。WebAssemblyを埋め込むため、バンドルは約1.3 MB大きくなります。パッケージしたプロジェクトは1つのファイルで、多くはオフラインで動き、`.wasm`を取りに行く先がないためです。
 
 ## 開発
 

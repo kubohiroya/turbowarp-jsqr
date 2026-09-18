@@ -1,5 +1,5 @@
-import jsQR from 'jsqr';
 import {extensionConfig} from './config';
+import {readQrCode, type QrRead} from './decoder';
 import definitions from './block-definitions.json';
 
 type BlockTypeName = 'COMMAND' | 'REPORTER';
@@ -33,6 +33,17 @@ interface CameraSourceCapability {
   acquireCamera(options?: Record<string, unknown>): Promise<CameraLease>;
 }
 
+export type {QrRead, StructuredAppendInfo} from './decoder';
+
+/**
+ * Version of the runtime capability at `runtime.ext_kubohiroyajsqr`.
+ *
+ * 2: decoding is zxing-cpp and asynchronous. `readFrame` returns the text, the bytes and the
+ * Structured Append position; `scanFrame` returns a promise of the text. Version 1 (jsQR) decoded
+ * synchronously and returned text only.
+ */
+export const CAPABILITY_VERSION = 2;
+
 export interface WaitForQrTextOptions {
   cameraId?: string;
   signal?: AbortSignal;
@@ -57,7 +68,10 @@ function normalizeCameraId(value: unknown): string {
 }
 
 export class JsQrExtension implements TurboWarpExtension {
+  public readonly capabilityVersion = CAPABILITY_VERSION;
   private lastQrText = '';
+  /** One canvas for every frame: allocating one per frame is most of the cost of a fast scan loop. */
+  private canvas: HTMLCanvasElement | undefined;
 
   public constructor() {
     Scratch.vm.runtime.ext_kubohiroyajsqr = this;
@@ -112,13 +126,17 @@ export class JsQrExtension implements TurboWarpExtension {
           cleanup();
           reject(abortError());
         };
-        const tick = () => {
+        const tick = async () => {
           if (signal?.aborted) {
             onAbort();
             return;
           }
           try {
-            const text = this.scanFrame(lease.getFrameSource());
+            const text = await this.scanFrame(lease.getFrameSource());
+            if (signal?.aborted) {
+              onAbort();
+              return;
+            }
             if (text !== null) {
               this.lastQrText = text;
               cleanup();
@@ -130,29 +148,41 @@ export class JsQrExtension implements TurboWarpExtension {
             reject(error);
             return;
           }
-          timer = setTimeout(tick, intervalMilliseconds);
+          timer = setTimeout(() => void tick(), intervalMilliseconds);
         };
         signal?.addEventListener('abort', onAbort, {once: true});
-        tick();
+        void tick();
       });
     } finally {
       await lease.release();
     }
   }
 
-  public scanFrame(frame: CameraFrameSource): string | null {
+  /**
+   * Reads the first QR code in a camera frame: its text, its bytes, and where it sits in a
+   * Structured Append message if it is part of one. Nothing when the frame holds no readable code.
+   */
+  public async readFrame(frame: CameraFrameSource): Promise<QrRead | null> {
+    const image = this.pixels(frame);
+    return image === null ? null : await readQrCode(image);
+  }
+
+  /** The text of the first QR code in a camera frame, or nothing. */
+  public async scanFrame(frame: CameraFrameSource): Promise<string | null> {
+    return (await this.readFrame(frame))?.text ?? null;
+  }
+
+  private pixels(frame: CameraFrameSource): ImageData | null {
     const width = Math.max(0, Math.floor(frame.width));
     const height = Math.max(0, Math.floor(frame.height));
     if (width === 0 || height === 0) return null;
-    const canvas = document.createElement('canvas');
-    canvas.width = width;
-    canvas.height = height;
-    const context = canvas.getContext('2d', {willReadFrequently: true});
+    this.canvas ??= document.createElement('canvas');
+    if (this.canvas.width !== width) this.canvas.width = width;
+    if (this.canvas.height !== height) this.canvas.height = height;
+    const context = this.canvas.getContext('2d', {willReadFrequently: true});
     if (!context) throw new Error('2D canvas context is unavailable.');
     context.drawImage(frame.element, 0, 0, width, height);
-    const image = context.getImageData(0, 0, width, height);
-    const result = jsQR(image.data, width, height);
-    return result?.data ?? null;
+    return context.getImageData(0, 0, width, height);
   }
 
   private cameraSource(): CameraSourceCapability {

@@ -27,6 +27,7 @@ describe('JsQrExtension', () => {
     expect(info.name).toBe('jsQR');
     expect(info.blocks.map((block) => block.text)).toContain('last QR text');
     expect(extension.lastQrTextReporter()).toBe('');
+    expect(extension.capabilityVersion).toBe(2);
   });
 
   it('requires the shared camera source for waits', async () => {
@@ -42,7 +43,7 @@ describe('JsQrExtension', () => {
     }));
     vi.stubGlobal('Scratch', scratch({ext_kubohiroyacamerasource: {acquireCamera}}));
     const extension = new JsQrExtension();
-    vi.spyOn(extension, 'scanFrame').mockReturnValue('qr:downward');
+    vi.spyOn(extension, 'scanFrame').mockResolvedValue('qr:downward');
 
     await expect(extension.waitForQrText({cameraId: 'qr'})).resolves.toBe('qr:downward');
 

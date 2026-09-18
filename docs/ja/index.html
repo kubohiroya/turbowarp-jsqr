@@ -29,7 +29,8 @@
     </div></section>
     <section class="section" id="api"><h2>API capability</h2><p>unsandboxed拡張は`Scratch.vm.runtime.ext_kubohiroyajsqr`を参照できます。</p>
 <pre><code>const text = await jsqr.waitForQrText({cameraId: 'qr', signal});
-const textOrNull = jsqr.scanFrame(frameSource);</code></pre>
+const read = await jsqr.readFrame(frameSource); // { text, bytes, structuredAppend } or null
+const textOrNull = await jsqr.scanFrame(frameSource);</code></pre>
     <p>`waitForQrText()`はCamera Sourceの名前付きleaseを取得し、フレームをポーリングして最初の復号文字列を返します。</p></section>
     <section class="section" id="setup"><h2>準備</h2><p class="note">Camera SourceをjsQRより先に読み込んでください。runtime variableブロックにはTemporary Variables (`lmsTempVars2`) が必要です。カメラフレームはアップロードされません。</p></section>
   </main>
