@@ -115,8 +115,8 @@ if (policy.profile !== "capability-extension") {
 if (policy.packageName !== manifest.name) {
   throw new Error("repo-policy.json packageName must match package.json name.");
 }
-if (manifest.version !== "0.3.0") {
-  throw new Error("package.json version must be 0.3.0.");
+if (manifest.version !== "0.4.0") {
+  throw new Error("package.json version must be 0.4.0.");
 }
 if (manifest.license !== policy.license) {
   throw new Error("package.json license must match repo-policy.json.");
@@ -165,7 +165,7 @@ requireText(englishPage, "TurboWarp TM", "docs/index.html");
 requireText(japanesePage, "TurboWarp TM", "docs/ja/index.html");
 
 const cdnUrl =
-  "https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-jsqr@0.3.0/dist/jsqr.js";
+  "https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-jsqr@0.4.0/dist/jsqr.js";
 requireText(readme, cdnUrl, "README.md");
 requireText(japaneseReadme, cdnUrl, "README.ja.md");
 
@@ -175,6 +175,7 @@ for (const expected of [
   "ID: kubohiroyajsqr",
   "License: MPL-2.0",
   "waitForQrText",
+  "readFrame",
   "scanFrame",
 ]) {
   requireText(bundle, expected, "dist/jsqr.js");

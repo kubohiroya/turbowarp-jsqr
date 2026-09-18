@@ -2,8 +2,9 @@
 
 **English** | [日本語](README.ja.md)
 
-TurboWarp jsQR is a TurboWarp extension capability for reading QR code text from a shared
-camera frame source. It prefers `@kubohiroya/turbowarp-camera-source` instead of
+TurboWarp jsQR is a TurboWarp extension capability for reading QR codes from a shared
+camera frame source. Since 0.4.0 it decodes with zxing-cpp (`zxing-wasm`) rather than jsQR, and
+reports where a code sits in a Structured Append message. It prefers `@kubohiroya/turbowarp-camera-source` instead of
 owning camera startup itself, so QR scanning can coexist with TurboWarp TM and can
 select a dedicated named camera such as a downward-facing `qr` camera.
 
@@ -15,7 +16,9 @@ select a dedicated named camera such as a downward-facing `qr` camera.
 - Waits for a QR code on a named Camera Source stream.
 - Stores decoded QR text in a runtime variable for TurboWarp projects.
 - Optionally broadcasts a message after a successful scan.
-- Exposes `waitForQrText()` and `scanFrame()` for other unsandboxed extensions.
+- Exposes `waitForQrText()`, `readFrame()` and `scanFrame()` for other unsandboxed extensions.
+- Reads QR Code Structured Append (ISO/IEC 18004) symbols: `readFrame()` returns each symbol's
+  position, count and parity with its bytes, so a caller can join a message split across several codes.
 
 ## Requirements and Safety
 
@@ -30,13 +33,13 @@ select a dedicated named camera such as a downward-facing `qr` camera.
 Load Camera Source first, then load jsQR:
 
 ```text
-https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-jsqr@0.3.0/dist/jsqr.js
+https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-jsqr@0.4.0/dist/jsqr.js
 ```
 
 For npm hosts:
 
 ```bash
-pnpm add @kubohiroya/turbowarp-jsqr@0.3.0
+pnpm add @kubohiroya/turbowarp-jsqr@0.4.0
 ```
 
 ## Quick Start
@@ -89,16 +92,31 @@ Returns the most recent QR text detected by this extension.
 ## Runtime API
 
 Other unsandboxed extensions can access `Scratch.vm.runtime.ext_kubohiroyajsqr`.
-Use `waitForQrText({cameraId, signal})` to wait for the next decoded QR value, or
-`scanFrame(frameSource)` to decode one camera frame.
+`capabilityVersion` is `2` since 0.4.0.
 
 ```js
 const text = await jsqr.waitForQrText({ cameraId: "qr", signal });
+const read = await jsqr.readFrame(frameSource);
+// read: { text, bytes, structuredAppend: { index, count, parity } | null } or null
+const textOrNull = await jsqr.scanFrame(frameSource);
 ```
+
+- `readFrame(frameSource)` decodes one camera frame. For a Structured Append symbol, `text` and
+  `bytes` are that symbol's share; join the `bytes` of all symbols in `index` order, and check that
+  they share `count` and `parity`. `@kubohiroya/qrcode-structured-append` does both.
+- `scanFrame(frameSource)` returns a promise of the text, or `null`.
 
 ## Compatibility
 
-The extension ID remains `kubohiroyajsqr`, and the block opcodes are unchanged. QR decode results, wait semantics, and the Camera Source peer range are unchanged in 0.2.0.
+The extension ID remains `kubohiroyajsqr`, and the block opcodes are unchanged.
+
+0.4.0 changes the runtime capability, not the blocks: decoding is zxing-cpp and asynchronous, so
+`scanFrame()` now returns a promise, and `readFrame()` is new. A caller written for 0.3.0 that used
+`scanFrame()`'s return value directly has to `await` it; check `capabilityVersion` to tell the two
+apart. zxing-cpp reads codes that jsQR could not — smaller in the frame, blurred, seen at an angle,
+or on a noisy sensor — and reads a frame in a few milliseconds instead of tens. The bundle grows by
+about 1.3 MB, because the WebAssembly is inlined: a packaged project runs from one file, often
+offline, with nothing beside it to fetch a `.wasm` from.
 
 ## Development
 

@@ -26,3 +26,8 @@ interface ScratchApi {
 }
 
 declare const Scratch: ScratchApi;
+
+declare module '*.wasm?inline' {
+  const dataUri: string;
+  export default dataUri;
+}

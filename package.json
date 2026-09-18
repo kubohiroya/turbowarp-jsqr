@@ -1,8 +1,8 @@
 {
   "name": "@kubohiroya/turbowarp-jsqr",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": "Hiroya Kubo <hiroya@cuc.ac.jp>",
-  "description": "A TurboWarp capability extension for reading QR code text from a shared camera source.",
+  "description": "Read QR codes, including Structured Append sequences, from a shared TurboWarp camera source. Decodes with zxing-cpp.",
   "type": "module",
   "license": "MPL-2.0",
   "homepage": "https://kubohiroya.github.io/turbowarp-jsqr/",
@@ -49,9 +49,6 @@
     "check:dist": "pnpm run build && node scripts/check-dist.ts",
     "prepack": "pnpm run check"
   },
-  "dependencies": {
-    "jsqr": "^1.4.0"
-  },
   "peerDependencies": {
     "@kubohiroya/turbowarp-camera-source": ">=0.1.0 <1"
   },
@@ -77,5 +74,8 @@
     "qr",
     "qrcode",
     "camera"
-  ]
+  ],
+  "dependencies": {
+    "zxing-wasm": "3.1.4"
+  }
 }
