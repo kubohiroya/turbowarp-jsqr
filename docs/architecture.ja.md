@@ -20,7 +20,7 @@ manifestプラグインはViteのビルド後フェーズで実行されます�
 
 ## 拡張機能API manifest v1
 
-`schemas/extension-manifest.schema.json`が規範となるJSON Schemaです。`formatVersion`は`1`で、互換性のないmanifest形式を導入するときに変更する必要があります。
+この契約は[`@kubohiroya/turbowarp-extension-manifest`](https://github.com/kubohiroya/turbowarp-extension-manifest)が所有します。同packageの`schemas/extension-manifest.schema.json`が規範となるJSON Schemaであり、`createExtensionManifest`が唯一の生成器です。`formatVersion`は`1`で、互換性のないmanifest形式を導入するときはpackage側で変更します。
 
 v1契約は次の情報を含みます。
 
