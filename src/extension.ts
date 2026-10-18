@@ -80,6 +80,7 @@ export class JsQrExtension implements TurboWarpExtension {
   public getInfo(): Record<string, unknown> {
     return {
       id: extensionConfig.id,
+      docsURI: 'https://kubohiroya.github.io/turbowarp-jsqr/',
       name: Scratch.translate(definitions.extensionName),
       blocks: blockDefinitions.map((block) => this.toScratchBlock(block))
     };

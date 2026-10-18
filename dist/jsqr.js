@@ -2092,6 +2092,7 @@
   	getInfo() {
   		return {
   			id: extensionConfig.id,
+  			docsURI: "https://kubohiroya.github.io/turbowarp-jsqr/",
   			name: Scratch.translate(block_definitions_default.extensionName),
   			blocks: blockDefinitions.map((block) => this.toScratchBlock(block))
   		};
