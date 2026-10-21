@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@kubohiroya/turbowarp-camera-source':
-        specifier: 0.19.0
-        version: 0.19.0
+        specifier: 0.19.1
+        version: 0.19.1
       zxing-wasm:
         specifier: 3.1.4
         version: 3.1.4(@types/emscripten@1.41.6)
@@ -262,8 +262,8 @@ packages:
   '@jridgewell/sourcemap-codec@1.5.5':
     resolution: {integrity: sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==}
 
-  '@kubohiroya/turbowarp-camera-source@0.19.0':
-    resolution: {integrity: sha512-ebY0Mn73ZX97lWe0YcqpuZhPhqnYSWiZ0FhZ7yBw3Rtkz3sdqEm97LkghRQROTEin9VbpliUoKwnnbtF2QhPag==}
+  '@kubohiroya/turbowarp-camera-source@0.19.1':
+    resolution: {integrity: sha512-9QKQe3lJoltWX7LXMtUy4tc1ervCOnz4JTNLxdZi+Psxr2fgK74btTryzJBhsFchAzL6aAWQ1ikJrqxTlzcjzA==}
     engines: {node: '>=22.18.0'}
 
   '@kubohiroya/turbowarp-extension-manifest@0.3.2':
@@ -1235,7 +1235,7 @@ snapshots:
 
   '@jridgewell/sourcemap-codec@1.5.5': {}
 
-  '@kubohiroya/turbowarp-camera-source@0.19.0': {}
+  '@kubohiroya/turbowarp-camera-source@0.19.1': {}
 
   '@kubohiroya/turbowarp-extension-manifest@0.3.2': {}
 
