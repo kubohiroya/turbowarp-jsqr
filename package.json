@@ -1,6 +1,6 @@
 {
   "name": "@kubohiroya/turbowarp-jsqr",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "author": "Hiroya Kubo <hiroya@cuc.ac.jp>",
   "description": "Read QR codes, including Structured Append sequences, from a shared TurboWarp camera source. Decodes with zxing-cpp.",
   "type": "module",
@@ -50,7 +50,7 @@
     "prepack": "pnpm run check"
   },
   "peerDependencies": {
-    "@kubohiroya/turbowarp-camera-source": "0.19.2"
+    "@kubohiroya/turbowarp-camera-source": "0.19.3"
   },
   "peerDependenciesMeta": {
     "@kubohiroya/turbowarp-camera-source": {
