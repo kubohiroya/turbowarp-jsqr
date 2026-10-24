@@ -115,8 +115,8 @@ if (policy.profile !== "capability-extension") {
 if (policy.packageName !== manifest.name) {
   throw new Error("repo-policy.json packageName must match package.json name.");
 }
-if (manifest.version !== "0.4.3") {
-  throw new Error("package.json version must be 0.4.3.");
+if (manifest.version !== "0.4.4") {
+  throw new Error("package.json version must be 0.4.4.");
 }
 if (manifest.license !== policy.license) {
   throw new Error("package.json license must match repo-policy.json.");
@@ -130,8 +130,8 @@ if (manifest.engines?.node !== policy.node) {
 if (extensionManifest.id !== policy.extensionId) {
   throw new Error("dist/extension-manifest.json has an unexpected extension ID.");
 }
-if (manifest.peerDependencies?.["@kubohiroya/turbowarp-camera-source"] !== "0.19.2") {
-  throw new Error("Camera Source peer must be exactly 0.19.2.");
+if (manifest.peerDependencies?.["@kubohiroya/turbowarp-camera-source"] !== "0.19.3") {
+  throw new Error("Camera Source peer must be exactly 0.19.3.");
 }
 
 for (const requiredFile of [
@@ -165,7 +165,7 @@ requireText(englishPage, "TurboWarp TM", "docs/index.html");
 requireText(japanesePage, "TurboWarp TM", "docs/ja/index.html");
 
 const cdnUrl =
-  "https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-jsqr@0.4.3/dist/jsqr.js";
+  "https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-jsqr@0.4.4/dist/jsqr.js";
 requireText(readme, cdnUrl, "README.md");
 requireText(japaneseReadme, cdnUrl, "README.ja.md");
 
