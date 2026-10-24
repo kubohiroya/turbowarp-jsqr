@@ -131,7 +131,7 @@ if (extensionManifest.id !== policy.extensionId) {
   throw new Error("dist/extension-manifest.json has an unexpected extension ID.");
 }
 if (manifest.peerDependencies?.["@kubohiroya/turbowarp-camera-source"] !== "0.19.2") {
-  throw new Error("Camera Source peer must be exactly 0.19.1.");
+  throw new Error("Camera Source peer must be exactly 0.19.2.");
 }
 
 for (const requiredFile of [
