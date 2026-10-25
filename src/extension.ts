@@ -1,3 +1,8 @@
+import {
+  readCameraSourceRuntime,
+  type CameraFrameSource,
+  type CameraSourceRuntime
+} from '@kubohiroya/turbowarp-camera-source/runtime';
 import {extensionConfig} from './config';
 import {readQrCode, type QrRead} from './decoder';
 import definitions from './block-definitions.json';
@@ -18,21 +23,6 @@ interface BlockDefinition {
   arguments: Record<string, DefinitionArgument>;
 }
 
-interface CameraFrameSource {
-  readonly element: HTMLVideoElement | HTMLCanvasElement;
-  readonly width: number;
-  readonly height: number;
-}
-
-interface CameraLease {
-  getFrameSource(): CameraFrameSource;
-  release(): Promise<void>;
-}
-
-interface CameraSourceCapability {
-  acquireCamera(options?: Record<string, unknown>): Promise<CameraLease>;
-}
-
 export type {QrRead, StructuredAppendInfo} from './decoder';
 
 /**
@@ -51,10 +41,6 @@ export interface WaitForQrTextOptions {
 }
 
 const blockDefinitions = definitions.blocks as readonly BlockDefinition[];
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
-}
 
 function abortError(): Error {
   const error = new Error('QR scanning was aborted.');
@@ -174,6 +160,13 @@ export class JsQrExtension implements TurboWarpExtension {
     return (await this.readFrame(frame))?.text ?? null;
   }
 
+  /**
+   * The frame's pixels, as the camera captured them.
+   *
+   * `CameraFrameSource.previewFlip` says how the stage preview is drawn and nothing about the
+   * pixels, so there is nothing here to undo: a QR code reads the same whichever way the preview
+   * faces, and mirroring the frame to match it would hand the decoder a reflected image.
+   */
   private pixels(frame: CameraFrameSource): ImageData | null {
     const width = Math.max(0, Math.floor(frame.width));
     const height = Math.max(0, Math.floor(frame.height));
@@ -187,12 +180,12 @@ export class JsQrExtension implements TurboWarpExtension {
     return context.getImageData(0, 0, width, height);
   }
 
-  private cameraSource(): CameraSourceCapability {
-    const candidate = this.runtime().ext_kubohiroyacamerasource;
-    if (!isRecord(candidate) || typeof candidate.acquireCamera !== 'function') {
+  private cameraSource(): CameraSourceRuntime {
+    const cameraSource = readCameraSourceRuntime(this.runtime());
+    if (!cameraSource) {
       throw new Error('jsQR requires @kubohiroya/turbowarp-camera-source.');
     }
-    return candidate as unknown as CameraSourceCapability;
+    return cameraSource;
   }
 
   private runtime(): Record<string, unknown> & {
