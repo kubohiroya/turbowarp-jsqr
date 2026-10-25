@@ -19,6 +19,23 @@
   	blockIconURI: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+PGcgZmlsbD0iI0ZGQUIxOSI+PHJlY3QgeD0iNiIgeT0iNiIgd2lkdGg9IjEzIiBoZWlnaHQ9IjEzIiByeD0iMyIvPjxyZWN0IHg9IjI5IiB5PSI2IiB3aWR0aD0iMTMiIGhlaWdodD0iMTMiIHJ4PSIzIi8+PHJlY3QgeD0iNiIgeT0iMjkiIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgcng9IjMiLz48L2c+PGcgZmlsbD0iI2ZmZiI+PHJlY3QgeD0iMTAiIHk9IjEwIiB3aWR0aD0iNSIgaGVpZ2h0PSI1IiByeD0iMSIvPjxyZWN0IHg9IjMzIiB5PSIxMCIgd2lkdGg9IjUiIGhlaWdodD0iNSIgcng9IjEiLz48cmVjdCB4PSIxMCIgeT0iMzMiIHdpZHRoPSI1IiBoZWlnaHQ9IjUiIHJ4PSIxIi8+PC9nPjxyZWN0IHg9IjMiIHk9IjIxIiB3aWR0aD0iNDIiIGhlaWdodD0iNiIgcng9IjMiIGZpbGw9IiM0Qzk3RkYiLz48L3N2Zz4="
   };
   //#endregion
+  //#region node_modules/.pnpm/@kubohiroya+turbowarp-camera-source@0.19.4/node_modules/@kubohiroya/turbowarp-camera-source/dist/runtime.js
+  /**
+  * Where the extension instance puts itself on the VM runtime.
+  *
+  * Present as soon as the extension is registered. Absent means Camera Source is not loaded, which a
+  * consumer has to handle whatever else it does.
+  */
+  var cameraSourceRuntimeKey = "ext_kubohiroyacamerasource";
+  /** Narrows a runtime value to the Camera Source surface, so a missing extension reads as absent. */
+  function readCameraSourceRuntime(runtime) {
+  	if (typeof runtime !== "object" || runtime === null) return void 0;
+  	const candidate = runtime[cameraSourceRuntimeKey];
+  	if (typeof candidate !== "object" || candidate === null) return void 0;
+  	const { acquireCamera } = candidate;
+  	return typeof acquireCamera === "function" ? candidate : void 0;
+  }
+  //#endregion
   //#region node_modules/.pnpm/zxing-wasm@3.1.4_@types+emscripten@1.41.6/node_modules/zxing-wasm/dist/es/share.js
   var e = [
   	[
@@ -2073,9 +2090,6 @@
   	]
   };
   var blockDefinitions = block_definitions_default.blocks;
-  function isRecord(value) {
-  	return typeof value === "object" && value !== null && !Array.isArray(value);
-  }
   function abortError() {
   	const error = /* @__PURE__ */ new Error("QR scanning was aborted.");
   	error.name = "AbortError";
@@ -2175,6 +2189,13 @@
   	async scanFrame(frame) {
   		return (await this.readFrame(frame))?.text ?? null;
   	}
+  	/**
+  	* The frame's pixels, as the camera captured them.
+  	*
+  	* `CameraFrameSource.previewFlip` says how the stage preview is drawn and nothing about the
+  	* pixels, so there is nothing here to undo: a QR code reads the same whichever way the preview
+  	* faces, and mirroring the frame to match it would hand the decoder a reflected image.
+  	*/
   	pixels(frame) {
   		const width = Math.max(0, Math.floor(frame.width));
   		const height = Math.max(0, Math.floor(frame.height));
@@ -2188,9 +2209,9 @@
   		return context.getImageData(0, 0, width, height);
   	}
   	cameraSource() {
-  		const candidate = this.runtime().ext_kubohiroyacamerasource;
-  		if (!isRecord(candidate) || typeof candidate.acquireCamera !== "function") throw new Error("jsQR requires @kubohiroya/turbowarp-camera-source.");
-  		return candidate;
+  		const cameraSource = readCameraSourceRuntime(this.runtime());
+  		if (!cameraSource) throw new Error("jsQR requires @kubohiroya/turbowarp-camera-source.");
+  		return cameraSource;
   	}
   	runtime() {
   		return Scratch.vm.runtime;

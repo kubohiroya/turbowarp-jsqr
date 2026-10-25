@@ -38,7 +38,14 @@ describe('JsQrExtension', () => {
   it('passes the requested camera ID to Camera Source', async () => {
     const release = vi.fn(async () => undefined);
     const acquireCamera = vi.fn(async () => ({
-      getFrameSource: () => ({element: {}, width: 1, height: 1}),
+      getFrameSource: () => ({
+        kind: 'video',
+        element: {},
+        width: 1,
+        height: 1,
+        previewFlip: 'none',
+        deviceId: 'camera-0'
+      }),
       release
     }));
     vi.stubGlobal('Scratch', scratch({ext_kubohiroyacamerasource: {acquireCamera}}));
