@@ -1,5 +1,7 @@
 # TurboWarp jsQR
 
+<img src="assets/block-icon.svg" alt="" width="48" height="48">
+
 **English** | [日本語](README.ja.md)
 
 TurboWarp jsQR is a TurboWarp extension capability for reading QR codes from a shared
