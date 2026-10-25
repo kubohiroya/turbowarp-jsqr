@@ -151,8 +151,8 @@ requireText(readme, "# TurboWarp jsQR", "README.md");
 requireText(japaneseReadme, "# TurboWarp jsQR", "README.ja.md");
 requireText(englishPage, "TurboWarp jsQR", "docs/index.html");
 requireText(japanesePage, "TurboWarp jsQR", "docs/ja/index.html");
-requireText(readme, "**English** | [日本語](README.ja.md)", "README.md");
-requireText(japaneseReadme, "[English](README.md) | **日本語**", "README.ja.md");
+requireText(readme, "English | [日本語](README.ja.md)", "README.md");
+requireText(japaneseReadme, "[English](README.md) | 日本語", "README.ja.md");
 requireText(readme, "SPDX-License-Identifier: MPL-2.0", "README.md");
 requireText(
   japaneseReadme,
