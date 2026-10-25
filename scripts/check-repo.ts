@@ -130,8 +130,8 @@ if (manifest.engines?.node !== policy.node) {
 if (extensionManifest.id !== policy.extensionId) {
   throw new Error("dist/extension-manifest.json has an unexpected extension ID.");
 }
-if (manifest.peerDependencies?.["@kubohiroya/turbowarp-camera-source"] !== "0.19.3") {
-  throw new Error("Camera Source peer must be exactly 0.19.3.");
+if (manifest.peerDependencies?.["@kubohiroya/turbowarp-camera-source"] !== "^0.19.3") {
+  throw new Error("Camera Source peer must use the caret range ^0.19.3.");
 }
 
 for (const requiredFile of [
