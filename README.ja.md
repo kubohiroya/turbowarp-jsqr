@@ -1,5 +1,7 @@
 # TurboWarp jsQR
 
+<img src="assets/block-icon.svg" alt="" width="48" height="48">
+
 [English](README.md) | **日本語**
 
 TurboWarp jsQRは、共有カメラフレームからQRコードを読み取るTurboWarp拡張capabilityです。0.4.0からは、jsQRではなくzxing-cpp（`zxing-wasm`）で復号し、連結QR（Structured Append）の中での位置も返します。カメラを自前で所有せず、`@kubohiroya/turbowarp-camera-source`を優先して使うことで、TurboWarp TMなどのカメラ利用と共存し、`qr`のような名前付き下向きカメラを指定できます。
