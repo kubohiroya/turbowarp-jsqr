@@ -1,8 +1,6 @@
 allowBuilds:
   esbuild: false
 minimumReleaseAgeExclude:
-  - '@kubohiroya/turbowarp-camera-source@0.17.1 || 0.19.0 || 0.19.1 || 0.19.2 || 0.19.3 || 0.19.4'
-  - '@kubohiroya/turbowarp-app-shell@0.3.1'
   - '@kubohiroya/turbowarp-extension-manifest@0.3.2'
-  - '@kubohiroya/vite-plugin-turbowarp-extension@0.6.1'
-  - '@kubohiroya/turbowarp-extension-data-editor@0.2.1'
+  - '@kubohiroya/turbowarp-camera-source@0.20.0'
+  - '@kubohiroya/vite-plugin-turbowarp-extension@0.8.0'
