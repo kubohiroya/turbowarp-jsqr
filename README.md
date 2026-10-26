@@ -123,6 +123,7 @@ offline, with nothing beside it to fetch a `.wasm` from.
 ## Development
 
 ```bash
+npm install --global corepack@latest
 corepack enable
 pnpm install --frozen-lockfile
 pnpm run check
