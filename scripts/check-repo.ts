@@ -115,8 +115,8 @@ if (policy.profile !== "capability-extension") {
 if (policy.packageName !== manifest.name) {
   throw new Error("repo-policy.json packageName must match package.json name.");
 }
-if (manifest.version !== "0.5.0") {
-  throw new Error("package.json version must be 0.5.0.");
+if (manifest.version !== "0.6.0") {
+  throw new Error("package.json version must be 0.6.0.");
 }
 if (manifest.license !== policy.license) {
   throw new Error("package.json license must match repo-policy.json.");
@@ -130,8 +130,8 @@ if (manifest.engines?.node !== policy.node) {
 if (extensionManifest.id !== policy.extensionId) {
   throw new Error("dist/extension-manifest.json has an unexpected extension ID.");
 }
-if (manifest.peerDependencies?.["@kubohiroya/turbowarp-camera-source"] !== "^0.20.0") {
-  throw new Error("Camera Source peer must use the caret range ^0.20.0.");
+if (manifest.peerDependencies?.["@kubohiroya/turbowarp-camera-source"] !== "^0.21.0") {
+  throw new Error("Camera Source peer must use the caret range ^0.21.0.");
 }
 
 for (const requiredFile of [
