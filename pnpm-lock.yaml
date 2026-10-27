@@ -16,8 +16,8 @@ importers:
         specifier: ^9.39.5
         version: 9.39.5
       '@kubohiroya/turbowarp-camera-source':
-        specifier: ^0.21.0
-        version: 0.21.0
+        specifier: ^0.21.1
+        version: 0.21.1
       '@kubohiroya/turbowarp-extension-manifest':
         specifier: ^0.4.0
         version: 0.4.0
@@ -262,8 +262,8 @@ packages:
   '@jridgewell/sourcemap-codec@1.5.5':
     resolution: {integrity: sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==}
 
-  '@kubohiroya/turbowarp-camera-source@0.21.0':
-    resolution: {integrity: sha512-G0/euh+VRbB6EKFKPRXuMdOFEdMdp860dg/rDEG8ADr0Ghcivu72pEdlGwtCHQySG01nlJ06tgxgtFM6PCq7kw==}
+  '@kubohiroya/turbowarp-camera-source@0.21.1':
+    resolution: {integrity: sha512-swJfiHCIhXZ7tv5ll9bbkh02bvdzm9JUoNow5evXGBKe82oH69LNkMfNiP/npos84l45LZFiEYsc2/WopGT7Kg==}
     engines: {node: '>=24'}
 
   '@kubohiroya/turbowarp-extension-manifest@0.4.0':
@@ -1235,7 +1235,7 @@ snapshots:
 
   '@jridgewell/sourcemap-codec@1.5.5': {}
 
-  '@kubohiroya/turbowarp-camera-source@0.21.0': {}
+  '@kubohiroya/turbowarp-camera-source@0.21.1': {}
 
   '@kubohiroya/turbowarp-extension-manifest@0.4.0': {}
 
