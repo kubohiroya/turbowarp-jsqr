@@ -9,6 +9,12 @@ TurboWarp jsQRは、共有カメラフレームからQRコードを読み取るT
 **[English guide](https://kubohiroya.github.io/turbowarp-jsqr/)** ·
 **[日本語ガイド](https://kubohiroya.github.io/turbowarp-jsqr/ja/)**
 
+## 最小デモ
+
+[TurboWarp Editor](https://turbowarp.org/editor?project_url=https%3A%2F%2Fkubohiroya.github.io%2Fturbowarp-jsqr%2Fsamples%2Fread-one-qr.sb3) · [SB3](https://kubohiroya.github.io/turbowarp-jsqr/samples/read-one-qr.sb3) · [操作・要件・未検証範囲](samples/README.md)
+
+緑旗は状態表示のみです。**Start**を明示クリックするとカメラ許可を要求し、**Stop**でカメラを解放します。カメラ・HTTPS・許可が必要です。実カメラによる取得・認識・校正の成功は未検証です。自動検証は無音で初期状態と停止を確認しています。
+
 ## できること
 
 - 名前付きCamera Sourceストリーム上のQRコードを待機します。

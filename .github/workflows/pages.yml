@@ -6,6 +6,10 @@ on:
     paths:
       - docs/**
       - .github/workflows/pages.yml
+      - samples/**
+      - scripts/build-samples.mjs
+      - scripts/prepare-pages.mjs
+      - dist/**
   workflow_dispatch:
 
 permissions:
@@ -21,6 +25,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - run: node scripts/prepare-pages.mjs
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
@@ -28,7 +36,7 @@ jobs:
       - name: Upload static site
         uses: actions/upload-pages-artifact@v4
         with:
-          path: docs
+          path: _site
 
   deploy:
     environment:

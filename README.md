@@ -13,6 +13,12 @@ select a dedicated named camera such as a downward-facing `qr` camera.
 **[Open the user guide](https://kubohiroya.github.io/turbowarp-jsqr/)** ·
 **[日本語ガイド](https://kubohiroya.github.io/turbowarp-jsqr/ja/)**
 
+## Minimal sample
+
+[TurboWarp Editor](https://turbowarp.org/editor?project_url=https%3A%2F%2Fkubohiroya.github.io%2Fturbowarp-jsqr%2Fsamples%2Fread-one-qr.sb3) · [SB3](https://kubohiroya.github.io/turbowarp-jsqr/samples/read-one-qr.sb3) · [Instructions, requirements and verification limits](samples/README.md)
+
+The green flag only displays status. Click **Start** to request camera permission; **Stop** releases the camera. A camera, HTTPS and permission are required. Physical capture, recognition and calibration success are unverified. Automated checks are silent and cover initial state and stopping.
+
 ## What it does
 
 - Waits for a QR code on a named Camera Source stream.

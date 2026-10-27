@@ -1,0 +1,56 @@
+{
+  "baseURL": "https://kubohiroya.github.io/turbowarp-jsqr/",
+  "extension": {
+    "id": "kubohiroyajsqr",
+    "bundle": "dist/jsqr.js",
+    "unsandboxed": true,
+    "dependencies": [
+      {
+        "id": "kubohiroyacamerasource",
+        "bundle": "samples/dependencies/camera-source.js",
+        "sha256": "a28ee94053abe0950afd7be49c2996b277c4a1b2ff86987257dde4210c6aa552",
+        "version": "0.21.0",
+        "source": "https://github.com/kubohiroya/turbowarp-camera-source/blob/9d234c265985589d26c2e2584175eb4ada3e2407/dist/camera-source.js",
+        "license": "MPL-2.0"
+      },
+      {
+        "id": "lmsTempVars2",
+        "url": "https://extensions.turbowarp.org/Lily/TempVariables2.js"
+      }
+    ]
+  },
+  "samples": [
+    {
+      "name": "read-one-qr",
+      "title": "Read one printed QR",
+      "checks": [
+        {
+          "variable": "running",
+          "equals": false
+        },
+        {
+          "variable": "width",
+          "equals": 0
+        },
+        {
+          "variable": "height",
+          "equals": 0
+        },
+        {
+          "variable": "error",
+          "equals": ""
+        },
+        {
+          "variable": "qr-result",
+          "equals": ""
+        }
+      ],
+      "instructions": "Green flag: status only. Start: request camera."
+    }
+  ],
+  "publicAssets": [
+    "samples/dependencies/camera-source.js",
+    "samples/dependencies/camera-source.LICENSE",
+    "samples/read-one-qr/hello-qr.svg"
+  ]
+}
