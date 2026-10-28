@@ -41,13 +41,13 @@ The green flag only displays status. Click **Start** to request camera permissio
 Load Camera Source first, then load jsQR:
 
 ```text
-https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-jsqr@0.6.1/dist/jsqr.js
+https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-jsqr@0.7.0/dist/jsqr.js
 ```
 
 For npm hosts:
 
 ```bash
-pnpm add @kubohiroya/turbowarp-jsqr@0.6.1
+pnpm add @kubohiroya/turbowarp-jsqr@0.7.0
 ```
 
 ## Quick Start
