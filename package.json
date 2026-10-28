@@ -1,7 +1,11 @@
 {
   "name": "@kubohiroya/turbowarp-jsqr",
-  "version": "0.6.1",
-  "author": "Hiroya Kubo <hiroya@cuc.ac.jp>",
+  "version": "0.7.0",
+  "author": {
+    "name": "Hiroya Kubo",
+    "email": "hiroya@cuc.ac.jp",
+    "url": "https://github.com/kubohiroya"
+  },
   "description": "Read QR codes, including Structured Append sequences, from a shared TurboWarp camera source. Decodes with zxing-cpp.",
   "type": "module",
   "license": "MPL-2.0",
@@ -54,7 +58,7 @@
     "pages:build": "node scripts/prepare-pages.mjs"
   },
   "peerDependencies": {
-    "@kubohiroya/turbowarp-camera-source": "^0.21.0"
+    "@kubohiroya/turbowarp-camera-source": "^0.22.0"
   },
   "peerDependenciesMeta": {
     "@kubohiroya/turbowarp-camera-source": {
@@ -63,9 +67,9 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
-    "@kubohiroya/turbowarp-camera-source": "^0.21.1",
-    "@kubohiroya/turbowarp-extension-manifest": "^0.4.0",
-    "@kubohiroya/vite-plugin-turbowarp-extension": "^0.9.0",
+    "@kubohiroya/turbowarp-camera-source": "^0.22.0",
+    "@kubohiroya/turbowarp-extension-manifest": "^0.5.0",
+    "@kubohiroya/vite-plugin-turbowarp-extension": "^0.10.0",
     "@types/node": "^24.13.3",
     "eslint": "^9.39.5",
     "typescript": "^5.9.3",
