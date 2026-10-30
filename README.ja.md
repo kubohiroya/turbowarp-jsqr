@@ -35,13 +35,13 @@ TurboWarp jsQRは、共有カメラフレームからQRコードを読み取るT
 Camera Sourceを先に読み込み、その後にjsQRを読み込みます。
 
 ```text
-https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-jsqr@0.7.0/dist/jsqr.js
+https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-jsqr@0.7.1/dist/jsqr.js
 ```
 
 npm hostでは次を使います。
 
 ```bash
-pnpm add @kubohiroya/turbowarp-jsqr@0.7.0
+pnpm add @kubohiroya/turbowarp-jsqr@0.7.1
 ```
 
 ## Quick start
