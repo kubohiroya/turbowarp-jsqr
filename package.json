@@ -1,6 +1,6 @@
 {
   "name": "@kubohiroya/turbowarp-jsqr",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "author": {
     "name": "Hiroya Kubo",
     "email": "hiroya@cuc.ac.jp",
@@ -87,5 +87,23 @@
   ],
   "dependencies": {
     "zxing-wasm": "3.1.7"
+  },
+  "turbowarpExtension": {
+    "resourceDeclaration": {
+      "schemaVersion": 1,
+      "resources": [
+        {
+          "type": "camera",
+          "usage": "required",
+          "purpose": {
+            "en": "Decode QR codes from shared camera frames",
+            "ja": "共有カメラの映像からQRコードを復号する"
+          },
+          "via": [
+            "@kubohiroya/turbowarp-camera-source"
+          ]
+        }
+      ]
+    }
   }
 }
