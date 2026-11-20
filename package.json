@@ -1,6 +1,6 @@
 {
   "name": "@kubohiroya/turbowarp-jsqr",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "author": {
     "name": "Hiroya Kubo",
     "email": "hiroya@cuc.ac.jp",
@@ -86,6 +86,6 @@
     "camera"
   ],
   "dependencies": {
-    "zxing-wasm": "3.1.4"
+    "zxing-wasm": "3.1.7"
   }
 }
