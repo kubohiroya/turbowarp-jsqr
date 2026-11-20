@@ -115,8 +115,8 @@ if (policy.profile !== "capability-extension") {
 if (policy.packageName !== manifest.name) {
   throw new Error("repo-policy.json packageName must match package.json name.");
 }
-if (manifest.version !== "0.9.0") {
-  throw new Error("package.json version must be 0.9.0.");
+if (manifest.version !== "0.9.1") {
+  throw new Error("package.json version must be 0.9.1.");
 }
 if (manifest.license !== policy.license) {
   throw new Error("package.json license must match repo-policy.json.");
