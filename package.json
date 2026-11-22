@@ -1,6 +1,6 @@
 {
-  "name": "@kubohiroya/turbowarp-jsqr",
-  "version": "0.10.0",
+  "name": "@kubohiroya/turbowarp-zxing",
+  "version": "0.11.0",
   "author": {
     "name": "Hiroya Kubo",
     "email": "hiroya@cuc.ac.jp",
@@ -9,16 +9,16 @@
   "description": "Read QR codes, including Structured Append sequences, from a shared TurboWarp camera source. Decodes with zxing-cpp.",
   "type": "module",
   "license": "MPL-2.0",
-  "homepage": "https://kubohiroya.github.io/turbowarp-jsqr/",
+  "homepage": "https://kubohiroya.github.io/turbowarp-zxing/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kubohiroya/turbowarp-jsqr.git"
+    "url": "git+https://github.com/kubohiroya/turbowarp-zxing.git"
   },
   "bugs": {
-    "url": "https://github.com/kubohiroya/turbowarp-jsqr/issues"
+    "url": "https://github.com/kubohiroya/turbowarp-zxing/issues"
   },
   "exports": {
-    "./jsqr.js": "./dist/jsqr.js",
+    "./zxing.js": "./dist/zxing.js",
     "./package.json": "./package.json"
   },
   "files": [
@@ -28,8 +28,8 @@
     "README.ja.md",
     "LICENSE"
   ],
-  "unpkg": "./dist/jsqr.js",
-  "jsdelivr": "./dist/jsqr.js",
+  "unpkg": "./dist/zxing.js",
+  "jsdelivr": "./dist/zxing.js",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"

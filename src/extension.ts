@@ -26,7 +26,7 @@ interface BlockDefinition {
 export type {QrRead, StructuredAppendInfo} from './decoder';
 
 /**
- * Version of the runtime capability at `runtime.ext_kubohiroyajsqr`.
+ * Version of the runtime capability at `runtime.ext_kubohiroyazxing`.
  *
  * 2: decoding is zxing-cpp and asynchronous. `readFrame` returns the text, the bytes and the
  * Structured Append position; `scanFrame` returns a promise of the text. Version 1 (jsQR) decoded
@@ -53,20 +53,20 @@ function normalizeCameraId(value: unknown): string {
   return text || 'default';
 }
 
-export class JsQrExtension implements TurboWarpExtension {
+export class ZxingExtension implements TurboWarpExtension {
   public readonly capabilityVersion = CAPABILITY_VERSION;
   private lastQrText = '';
   /** One canvas for every frame: allocating one per frame is most of the cost of a fast scan loop. */
   private canvas: HTMLCanvasElement | undefined;
 
   public constructor() {
-    Scratch.vm.runtime.ext_kubohiroyajsqr = this;
+    Scratch.vm.runtime.ext_kubohiroyazxing = this;
   }
 
   public getInfo(): Record<string, unknown> {
     return {
       id: extensionConfig.id,
-      docsURI: 'https://kubohiroya.github.io/turbowarp-jsqr/',
+      docsURI: 'https://kubohiroya.github.io/turbowarp-zxing/',
       blockIconURI: extensionConfig.blockIconURI,
       name: Scratch.translate(definitions.extensionName),
       blocks: blockDefinitions.map((block) => this.toScratchBlock(block))
@@ -183,7 +183,7 @@ export class JsQrExtension implements TurboWarpExtension {
   private cameraSource(): CameraSourceRuntime {
     const cameraSource = readCameraSourceRuntime(this.runtime());
     if (!cameraSource) {
-      throw new Error('jsQR requires @kubohiroya/turbowarp-camera-source.');
+      throw new Error('ZXing requires @kubohiroya/turbowarp-camera-source.');
     }
     return cameraSource;
   }
@@ -202,7 +202,7 @@ export class JsQrExtension implements TurboWarpExtension {
     if (!runtimeVariable) throw new Error('RUNTIME_VAR must be specified.');
     const temporaryVariables = this.runtime().ext_lmsTempVars2;
     if (!temporaryVariables || typeof temporaryVariables.setRuntimeVariable !== 'function') {
-      throw new Error('Temporary Variables (lmsTempVars2) must be loaded before using jsQR blocks.');
+      throw new Error('Temporary Variables (lmsTempVars2) must be loaded before using ZXing blocks.');
     }
     temporaryVariables.setRuntimeVariable({VAR: runtimeVariable, STRING: value});
   }

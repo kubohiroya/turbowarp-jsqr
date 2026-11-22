@@ -1,8 +1,8 @@
 {
   "profile": "capability-extension",
-  "packageName": "@kubohiroya/turbowarp-jsqr",
-  "extensionId": "kubohiroyajsqr",
-  "standaloneBundle": "dist/jsqr.js",
+  "packageName": "@kubohiroya/turbowarp-zxing",
+  "extensionId": "kubohiroyazxing",
+  "standaloneBundle": "dist/zxing.js",
   "manifest": "dist/extension-manifest.json",
   "readmes": {
     "english": "README.md",

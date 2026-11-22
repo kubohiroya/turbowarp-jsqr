@@ -3,22 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="共有カメラソースからQRコード文字列を読み取るjsQR TurboWarp拡張のガイド。">
-  <title>TurboWarp jsQR ガイド</title>
-  <link rel="canonical" href="https://kubohiroya.github.io/turbowarp-jsqr/ja/">
-  <link rel="alternate" hreflang="en" href="https://kubohiroya.github.io/turbowarp-jsqr/">
-  <link rel="alternate" hreflang="ja" href="https://kubohiroya.github.io/turbowarp-jsqr/ja/">
+  <meta name="description" content="共有カメラソースからQRコード文字列を読み取るZXing TurboWarp拡張のガイド。">
+  <title>TurboWarp ZXing ガイド</title>
+  <link rel="canonical" href="https://kubohiroya.github.io/turbowarp-zxing/ja/">
+  <link rel="alternate" hreflang="en" href="https://kubohiroya.github.io/turbowarp-zxing/">
+  <link rel="alternate" hreflang="ja" href="https://kubohiroya.github.io/turbowarp-zxing/ja/">
   <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body>
   <header class="topbar"><div class="topbar-inner">
-    <a class="brand" href="./">TurboWarp jsQR</a>
+    <a class="brand" href="./">TurboWarp ZXing</a>
     <nav class="nav" aria-label="Sections"><a href="#blocks">ブロック</a><a href="#api">API</a><a href="#setup">準備</a></nav>
   </div></header>
   <main>
     <section class="hero">
       <div><p class="eyebrow">TurboWarp QR input</p><h1>名前付きカメラからQRを読む。</h1>
-      <p class="lede">TurboWarp jsQRはCamera Sourceのフレームを利用してQRコード文字列を復号します。TurboWarp TMが別カメラを使っている間に、`qr`のような下向き専用カメラを指定できます。</p></div>
+      <p class="lede">TurboWarp ZXingはCamera Sourceのフレームを利用してQRコード文字列を復号します。TurboWarp TMが別カメラを使っている間に、`qr`のような下向き専用カメラを指定できます。</p></div>
       <div class="panel"><span class="block">wait for QR code on camera qr</span><span class="block">last QR text</span></div>
     </section>
     <section class="section" id="blocks"><h2>ブロック</h2><div class="grid">
@@ -26,14 +26,14 @@
       <article class="card"><h3>wait for QR code and broadcast</h3><p>文字列保存後にbroadcastを開始します。</p></article>
       <article class="card"><h3>last QR text</h3><p>最後に読み取ったQR文字列を返します。</p></article>
     </div></section>
-    <section class="section" id="api"><h2>API capability</h2><p>unsandboxed拡張は`Scratch.vm.runtime.ext_kubohiroyajsqr`を参照できます。</p>
-<pre><code>const text = await jsqr.waitForQrText({cameraId: 'qr', signal});
-const read = await jsqr.readFrame(frameSource); // { text, bytes, structuredAppend } or null
-const textOrNull = await jsqr.scanFrame(frameSource);</code></pre>
+    <section class="section" id="api"><h2>API capability</h2><p>unsandboxed拡張は`Scratch.vm.runtime.ext_kubohiroyazxing`を参照できます。</p>
+<pre><code>const text = await zxing.waitForQrText({cameraId: 'qr', signal});
+const read = await zxing.readFrame(frameSource); // { text, bytes, structuredAppend } or null
+const textOrNull = await zxing.scanFrame(frameSource);</code></pre>
     <p>`waitForQrText()`はCamera Sourceの名前付きleaseを取得し、フレームをポーリングして最初の復号文字列を返します。</p></section>
-    <section class="section" id="setup"><h2>準備</h2><p class="note">Camera SourceをjsQRより先に読み込んでください。runtime variableブロックにはTemporary Variables (`lmsTempVars2`) が必要です。カメラフレームはアップロードされません。</p></section>
+    <section class="section" id="setup"><h2>準備</h2><p class="note">Camera SourceをZXingより先に読み込んでください。runtime variableブロックにはTemporary Variables (`lmsTempVars2`) が必要です。カメラフレームはアップロードされません。</p></section>
   </main>
-  <footer>Source: <a href="https://github.com/kubohiroya/turbowarp-jsqr">GitHub</a></footer>
+  <footer>Source: <a href="https://github.com/kubohiroya/turbowarp-zxing">GitHub</a></footer>
 <!-- The shared TurboWarp Plus header. It inserts itself at the top of the
      page in a shadow root, so it cannot disturb the styles below. -->
 <script type="module"

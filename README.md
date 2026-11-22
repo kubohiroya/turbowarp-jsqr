@@ -1,21 +1,21 @@
-# TurboWarp jsQR
+# TurboWarp ZXing
 
 <img src="assets/block-icon.svg" alt="" width="48" height="48">
 
 English | [日本語](README.ja.md)
 
-TurboWarp jsQR is a TurboWarp extension capability for reading QR codes from a shared
+TurboWarp ZXing is a TurboWarp extension capability for reading QR codes from a shared
 camera frame source. Since 0.4.0 it decodes with zxing-cpp (`zxing-wasm`) rather than jsQR, and
 reports where a code sits in a Structured Append message. It prefers `@kubohiroya/turbowarp-camera-source` instead of
 owning camera startup itself, so QR scanning can coexist with TurboWarp TM and can
 select a dedicated named camera such as a downward-facing `qr` camera.
 
-**[Open the user guide](https://kubohiroya.github.io/turbowarp-jsqr/)** ·
-**[日本語ガイド](https://kubohiroya.github.io/turbowarp-jsqr/ja/)**
+**[Open the user guide](https://kubohiroya.github.io/turbowarp-zxing/)** ·
+**[日本語ガイド](https://kubohiroya.github.io/turbowarp-zxing/ja/)**
 
 ## Minimal sample
 
-[TurboWarp Editor](https://turbowarp.org/editor?project_url=https%3A%2F%2Fkubohiroya.github.io%2Fturbowarp-jsqr%2Fsamples%2Fread-one-qr.sb3) · [SB3](https://kubohiroya.github.io/turbowarp-jsqr/samples/read-one-qr.sb3) · [Instructions, requirements and verification limits](samples/README.md)
+[TurboWarp Editor](https://turbowarp.org/editor?project_url=https%3A%2F%2Fkubohiroya.github.io%2Fturbowarp-zxing%2Fsamples%2Fread-one-qr.sb3) · [SB3](https://kubohiroya.github.io/turbowarp-zxing/samples/read-one-qr.sb3) · [Instructions, requirements and verification limits](samples/README.md)
 
 The green flag only displays status. Click **Start** to request camera permission; **Stop** releases the camera. A camera, HTTPS and permission are required. Physical capture, recognition and calibration success are unverified. Automated checks are silent and cover initial state and stopping.
 
@@ -31,23 +31,23 @@ The green flag only displays status. Click **Start** to request camera permissio
 ## Requirements and Safety
 
 - TurboWarp custom extensions loaded with **Run extension without sandbox**.
-- `@kubohiroya/turbowarp-camera-source` loaded before jsQR.
+- `@kubohiroya/turbowarp-camera-source` loaded before ZXing.
 - Browser camera permission through Camera Source.
 - Temporary Variables (`lmsTempVars2`) when using runtime-variable blocks.
-- Camera frames stay in the browser. jsQR does not upload frames.
+- Camera frames stay in the browser. ZXing does not upload frames.
 
 ## Installation
 
-Load Camera Source first, then load jsQR:
+Load Camera Source first, then load ZXing:
 
 ```text
-https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-jsqr@0.10.0/dist/jsqr.js
+https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-zxing@0.11.0/dist/zxing.js
 ```
 
 For npm hosts:
 
 ```bash
-pnpm add @kubohiroya/turbowarp-jsqr@0.10.0
+pnpm add @kubohiroya/turbowarp-zxing@0.11.0
 ```
 
 ## Quick Start
@@ -99,14 +99,14 @@ Returns the most recent QR text detected by this extension.
 
 ## Runtime API
 
-Other unsandboxed extensions can access `Scratch.vm.runtime.ext_kubohiroyajsqr`.
+Other unsandboxed extensions can access `Scratch.vm.runtime.ext_kubohiroyazxing`.
 `capabilityVersion` is `2` since 0.4.0.
 
 ```js
-const text = await jsqr.waitForQrText({ cameraId: "qr", signal });
-const read = await jsqr.readFrame(frameSource);
+const text = await zxing.waitForQrText({ cameraId: "qr", signal });
+const read = await zxing.readFrame(frameSource);
 // read: { text, bytes, structuredAppend: { index, count, parity } | null } or null
-const textOrNull = await jsqr.scanFrame(frameSource);
+const textOrNull = await zxing.scanFrame(frameSource);
 ```
 
 - `readFrame(frameSource)` decodes one camera frame. For a Structured Append symbol, `text` and
@@ -116,7 +116,13 @@ const textOrNull = await jsqr.scanFrame(frameSource);
 
 ## Compatibility
 
-The extension ID remains `kubohiroyajsqr`, and the block opcodes are unchanged.
+0.11.0 renames the package from `@kubohiroya/turbowarp-jsqr` to `@kubohiroya/turbowarp-zxing`, and the
+extension ID from `kubohiroyajsqr` to `kubohiroyazxing`. The name came from jsQR, which 0.3.0 and
+earlier decoded with; since 0.4.0 the decoder is zxing-cpp. The block opcodes, the runtime capability
+(`Scratch.vm.runtime.ext_kubohiroyazxing`) and the bundle path (`dist/zxing.js`) change with the ID.
+A project saved with 0.10.0 or earlier still names `kubohiroyajsqr`, so it needs the old bundle, or
+its extension ID and opcode prefix rewritten (`sb3-toolchain extensions migrate-id` does this).
+An extension that reads the runtime capability reads `ext_kubohiroyazxing` instead.
 
 0.4.0 changes the runtime capability, not the blocks: decoding is zxing-cpp and asynchronous, so
 `scanFrame()` now returns a promise, and `readFrame()` is new. A caller written for 0.3.0 that used
@@ -147,7 +153,7 @@ pnpm run dev
 TypeScript source
   -> Vite
   -> vite-plugin-turbowarp-extension
-  -> dist/jsqr.js
+  -> dist/zxing.js
 
 Extension config + block definitions
   -> extension manifest plugin

@@ -1,6 +1,6 @@
 # 最小デモ / Minimal sample
 
-[TurboWarp Editor](https://turbowarp.org/editor?project_url=https%3A%2F%2Fkubohiroya.github.io%2Fturbowarp-jsqr%2Fsamples%2Fread-one-qr.sb3) / [SB3](https://kubohiroya.github.io/turbowarp-jsqr/samples/read-one-qr.sb3)
+[TurboWarp Editor](https://turbowarp.org/editor?project_url=https%3A%2F%2Fkubohiroya.github.io%2Fturbowarp-zxing%2Fsamples%2Fread-one-qr.sb3) / [SB3](https://kubohiroya.github.io/turbowarp-zxing/samples/read-one-qr.sb3)
 
 ## このデモ / This sample
 

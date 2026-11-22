@@ -115,8 +115,8 @@ if (policy.profile !== "capability-extension") {
 if (policy.packageName !== manifest.name) {
   throw new Error("repo-policy.json packageName must match package.json name.");
 }
-if (manifest.version !== "0.10.0") {
-  throw new Error("package.json version must be 0.10.0.");
+if (manifest.version !== "0.11.0") {
+  throw new Error("package.json version must be 0.11.0.");
 }
 if (manifest.license !== policy.license) {
   throw new Error("package.json license must match repo-policy.json.");
@@ -147,10 +147,10 @@ for (const requiredFile of [
 
 requireText(license, "Mozilla Public License Version 2.0", "LICENSE");
 requireText(license, "9. Miscellaneous", "LICENSE");
-requireText(readme, "# TurboWarp jsQR", "README.md");
-requireText(japaneseReadme, "# TurboWarp jsQR", "README.ja.md");
-requireText(englishPage, "TurboWarp jsQR", "docs/index.html");
-requireText(japanesePage, "TurboWarp jsQR", "docs/ja/index.html");
+requireText(readme, "# TurboWarp ZXing", "README.md");
+requireText(japaneseReadme, "# TurboWarp ZXing", "README.ja.md");
+requireText(englishPage, "TurboWarp ZXing", "docs/index.html");
+requireText(japanesePage, "TurboWarp ZXing", "docs/ja/index.html");
 requireText(readme, "English | [日本語](README.ja.md)", "README.md");
 requireText(japaneseReadme, "[English](README.md) | 日本語", "README.ja.md");
 requireText(readme, "SPDX-License-Identifier: MPL-2.0", "README.md");
@@ -165,20 +165,20 @@ requireText(englishPage, "TurboWarp TM", "docs/index.html");
 requireText(japanesePage, "TurboWarp TM", "docs/ja/index.html");
 
 const cdnUrl =
-  "https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-jsqr@0.10.0/dist/jsqr.js";
+  "https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-zxing@0.11.0/dist/zxing.js";
 requireText(readme, cdnUrl, "README.md");
 requireText(japaneseReadme, cdnUrl, "README.ja.md");
 
-const bundle = await readText("dist/jsqr.js");
+const bundle = await readText("dist/zxing.js");
 for (const expected of [
-  "Name: jsQR",
-  "ID: kubohiroyajsqr",
+  "Name: ZXing",
+  "ID: kubohiroyazxing",
   "License: MPL-2.0",
   "waitForQrText",
   "readFrame",
   "scanFrame",
 ]) {
-  requireText(bundle, expected, "dist/jsqr.js");
+  requireText(bundle, expected, "dist/zxing.js");
 }
 
 for (const file of await collectTextFiles(projectRoot)) {

@@ -1,5 +1,5 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
-import {JsQrExtension} from '../src/extension.js';
+import {ZxingExtension} from '../src/extension.js';
 
 function scratch(runtime: Record<string, unknown> = {}) {
   return {
@@ -19,19 +19,19 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-describe('JsQrExtension', () => {
+describe('ZxingExtension', () => {
   it('registers a runtime capability and reports metadata', () => {
-    const extension = new JsQrExtension();
-    expect(Scratch.vm.runtime.ext_kubohiroyajsqr).toBe(extension);
+    const extension = new ZxingExtension();
+    expect(Scratch.vm.runtime.ext_kubohiroyazxing).toBe(extension);
     const info = extension.getInfo() as {name: string; blocks: Array<{text: string}>};
-    expect(info.name).toBe('jsQR');
+    expect(info.name).toBe('ZXing');
     expect(info.blocks.map((block) => block.text)).toContain('last QR text');
     expect(extension.lastQrTextReporter()).toBe('');
     expect(extension.capabilityVersion).toBe(2);
   });
 
   it('requires the shared camera source for waits', async () => {
-    const extension = new JsQrExtension();
+    const extension = new ZxingExtension();
     await expect(extension.waitForQrText()).rejects.toThrow(/camera-source/u);
   });
 
@@ -49,12 +49,12 @@ describe('JsQrExtension', () => {
       release
     }));
     vi.stubGlobal('Scratch', scratch({ext_kubohiroyacamerasource: {acquireCamera}}));
-    const extension = new JsQrExtension();
+    const extension = new ZxingExtension();
     vi.spyOn(extension, 'scanFrame').mockResolvedValue('qr:downward');
 
     await expect(extension.waitForQrText({cameraId: 'qr'})).resolves.toBe('qr:downward');
 
-    expect(acquireCamera).toHaveBeenCalledWith({owner: 'kubohiroyajsqr', cameraId: 'qr'});
+    expect(acquireCamera).toHaveBeenCalledWith({owner: 'kubohiroyazxing', cameraId: 'qr'});
     expect(release).toHaveBeenCalledOnce();
   });
 });

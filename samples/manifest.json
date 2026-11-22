@@ -1,8 +1,8 @@
 {
-  "baseURL": "https://kubohiroya.github.io/turbowarp-jsqr/",
+  "baseURL": "https://kubohiroya.github.io/turbowarp-zxing/",
   "extension": {
-    "id": "kubohiroyajsqr",
-    "bundle": "dist/jsqr.js",
+    "id": "kubohiroyazxing",
+    "bundle": "dist/zxing.js",
     "unsandboxed": true,
     "dependencies": [
       {
