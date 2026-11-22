@@ -1,5 +1,5 @@
-// Name: jsQR
-// ID: kubohiroyajsqr
+// Name: ZXing
+// ID: kubohiroyazxing
 // Description: Read QR codes, including Structured Append sequences, from a shared TurboWarp camera source. Decodes with zxing-cpp.
 // By: Hiroya Kubo
 // License: MPL-2.0
@@ -9,9 +9,9 @@
 
 //#region src/config.ts
 var extensionConfig = {
-	id: "kubohiroyajsqr",
-	slug: "jsqr",
-	name: "jsQR",
+	id: "kubohiroyazxing",
+	slug: "zxing",
+	name: "ZXing",
 	description: "Read QR codes, including Structured Append sequences, from a shared TurboWarp camera source. Decodes with zxing-cpp.",
 	author: "Hiroya Kubo",
 	license: "MPL-2.0",
@@ -2021,7 +2021,7 @@ function bytesOfDataUri(uri) {
 	return bytes;
 }
 var block_definitions_default = {
-	extensionName: "jsQR",
+	extensionName: "ZXing",
 	blocks: [
 		{
 			"opcode": "waitForQrTextSetRuntimeVar",
@@ -2077,16 +2077,16 @@ function abortError() {
 function normalizeCameraId(value) {
 	return String(value ?? "").trim() || "default";
 }
-var JsQrExtension = class {
+var ZxingExtension = class {
 	constructor() {
 		this.capabilityVersion = 2;
 		this.lastQrText = "";
-		Scratch.vm.runtime.ext_kubohiroyajsqr = this;
+		Scratch.vm.runtime.ext_kubohiroyazxing = this;
 	}
 	getInfo() {
 		return {
 			id: extensionConfig.id,
-			docsURI: "https://kubohiroya.github.io/turbowarp-jsqr/",
+			docsURI: "https://kubohiroya.github.io/turbowarp-zxing/",
 			blockIconURI: extensionConfig.blockIconURI,
 			name: Scratch.translate(block_definitions_default.extensionName),
 			blocks: blockDefinitions.map((block) => this.toScratchBlock(block))
@@ -2189,7 +2189,7 @@ var JsQrExtension = class {
 	}
 	cameraSource() {
 		const cameraSource = readCameraSourceRuntime(this.runtime());
-		if (!cameraSource) throw new Error("jsQR requires @kubohiroya/turbowarp-camera-source.");
+		if (!cameraSource) throw new Error("ZXing requires @kubohiroya/turbowarp-camera-source.");
 		return cameraSource;
 	}
 	runtime() {
@@ -2199,7 +2199,7 @@ var JsQrExtension = class {
 		const runtimeVariable = String(name ?? "").trim();
 		if (!runtimeVariable) throw new Error("RUNTIME_VAR must be specified.");
 		const temporaryVariables = this.runtime().ext_lmsTempVars2;
-		if (!temporaryVariables || typeof temporaryVariables.setRuntimeVariable !== "function") throw new Error("Temporary Variables (lmsTempVars2) must be loaded before using jsQR blocks.");
+		if (!temporaryVariables || typeof temporaryVariables.setRuntimeVariable !== "function") throw new Error("Temporary Variables (lmsTempVars2) must be loaded before using ZXing blocks.");
 		temporaryVariables.setRuntimeVariable({
 			VAR: runtimeVariable,
 			STRING: value
@@ -2220,7 +2220,7 @@ var JsQrExtension = class {
 //#endregion
 //#region src/index.ts
 if (extensionConfig.unsandboxed && !Scratch.extensions.unsandboxed) throw new Error(`${extensionConfig.name} must run unsandboxed.`);
-Scratch.extensions.register(new JsQrExtension());
+Scratch.extensions.register(new ZxingExtension());
 //#endregion
 
 })(Scratch);

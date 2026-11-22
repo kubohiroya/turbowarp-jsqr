@@ -98,7 +98,7 @@
           "topLevel": false
         },
         "block4": {
-          "opcode": "kubohiroyajsqr_lastQrTextReporter",
+          "opcode": "kubohiroyazxing_lastQrTextReporter",
           "next": null,
           "parent": "block5",
           "inputs": {},
@@ -456,7 +456,7 @@
           "topLevel": false
         },
         "block5": {
-          "opcode": "kubohiroyajsqr_waitForQrTextSetRuntimeVar",
+          "opcode": "kubohiroyazxing_waitForQrTextSetRuntimeVar",
           "next": "block7",
           "parent": "block4",
           "inputs": {
@@ -480,7 +480,7 @@
           "topLevel": false
         },
         "block6": {
-          "opcode": "kubohiroyajsqr_lastQrTextReporter",
+          "opcode": "kubohiroyazxing_lastQrTextReporter",
           "next": null,
           "parent": "block7",
           "inputs": {},

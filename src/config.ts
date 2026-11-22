@@ -1,7 +1,7 @@
 export const extensionConfig = {
-  id: 'kubohiroyajsqr',
-  slug: 'jsqr',
-  name: 'jsQR',
+  id: 'kubohiroyazxing',
+  slug: 'zxing',
+  name: 'ZXing',
   description: 'Read QR codes, including Structured Append sequences, from a shared TurboWarp camera source. Decodes with zxing-cpp.',
   author: 'Hiroya Kubo',
   license: 'MPL-2.0',
