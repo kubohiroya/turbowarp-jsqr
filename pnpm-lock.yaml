@@ -16,11 +16,11 @@ importers:
         specifier: ^9.39.5
         version: 9.39.5
       '@kubohiroya/turbowarp-camera-source':
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.25.0
+        version: 0.25.0
       '@kubohiroya/turbowarp-extension-manifest':
-        specifier: ^0.5.0
-        version: 0.5.0
+        specifier: ^0.6.0
+        version: 0.6.0
       '@kubohiroya/vite-plugin-turbowarp-extension':
         specifier: ^0.11.0
         version: 0.11.0(vite@8.2.2(@types/node@24.13.3)(esbuild@0.28.1)(yaml@2.9.1))
@@ -262,12 +262,12 @@ packages:
   '@jridgewell/sourcemap-codec@1.5.5':
     resolution: {integrity: sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==}
 
-  '@kubohiroya/turbowarp-camera-source@0.24.0':
-    resolution: {integrity: sha512-vzZ5pdQedCGXxMoK3rKbgjdZkTZmFem/GBdztS2C2D22uge7F/YUKa5ojpV6AGN2gX/XS4w9fpmCfxeszduDJA==}
+  '@kubohiroya/turbowarp-camera-source@0.25.0':
+    resolution: {integrity: sha512-9AxxDQRcnUw6KcPNd3m7F9d9L9LqDIOGj2So3MqnTDIZYueDluYun9SbWH3BYNrCrxe8QNKAEKOBDibdz85eFg==}
     engines: {node: '>=24'}
 
-  '@kubohiroya/turbowarp-extension-manifest@0.5.0':
-    resolution: {integrity: sha512-YD8fwGTwTC6oMinmVLRp5+x/6piKLTYNraKnsc+oEi/w6NFdePm1ocV8eHnBBMcqEO2usr2mI/0qnV66Ex35YA==}
+  '@kubohiroya/turbowarp-extension-manifest@0.6.0':
+    resolution: {integrity: sha512-GnNFESu2EeyrFkuxOQoFsEta3HwnNjen0PJm7DOOy2wPuqItqaogEUq80ccnJ/GwfVwfMS9V5Eddsga5CbF+Mw==}
     engines: {node: '>=24'}
 
   '@kubohiroya/vite-plugin-turbowarp-extension@0.11.0':
@@ -1235,9 +1235,9 @@ snapshots:
 
   '@jridgewell/sourcemap-codec@1.5.5': {}
 
-  '@kubohiroya/turbowarp-camera-source@0.24.0': {}
+  '@kubohiroya/turbowarp-camera-source@0.25.0': {}
 
-  '@kubohiroya/turbowarp-extension-manifest@0.5.0': {}
+  '@kubohiroya/turbowarp-extension-manifest@0.6.0': {}
 
   '@kubohiroya/vite-plugin-turbowarp-extension@0.11.0(vite@8.2.2(@types/node@24.13.3)(esbuild@0.28.1)(yaml@2.9.1))':
     dependencies:
