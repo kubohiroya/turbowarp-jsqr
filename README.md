@@ -41,13 +41,13 @@ The green flag only displays status. Click **Start** to request camera permissio
 Load Camera Source first, then load ZXing:
 
 ```text
-https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-zxing@0.11.0/dist/zxing.js
+https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-zxing@0.11.1/dist/zxing.js
 ```
 
 For npm hosts:
 
 ```bash
-pnpm add @kubohiroya/turbowarp-zxing@0.11.0
+pnpm add @kubohiroya/turbowarp-zxing@0.11.1
 ```
 
 ## Quick Start
