@@ -35,13 +35,13 @@ TurboWarp ZXingは、共有カメラフレームからQRコードを読み取る
 Camera Sourceを先に読み込み、その後にZXingを読み込みます。
 
 ```text
-https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-zxing@0.11.0/dist/zxing.js
+https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-zxing@0.11.1/dist/zxing.js
 ```
 
 npm hostでは次を使います。
 
 ```bash
-pnpm add @kubohiroya/turbowarp-zxing@0.11.0
+pnpm add @kubohiroya/turbowarp-zxing@0.11.1
 ```
 
 ## Quick start
